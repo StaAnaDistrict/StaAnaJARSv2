@@ -1,0 +1,377 @@
+body {
+    margin: 0;
+    background: #FBF7F1;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #042A4A;
+    padding: 0.5rem 2rem;
+    position: relative;
+}
+
+.navbar-logo {
+    height: 48px;
+    width: auto;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: auto;
+}
+
+.navbar-links li {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    padding: 0.5rem 0.7rem;
+    display: block;
+}
+
+.navbar-link:hover {
+    opacity: 0.7;
+}
+
+.navbar-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #042A4A;
+    min-width: 180px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 0 0 0.5rem 0.5rem;
+    z-index: 20;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    list-style: none;
+    margin: 0;
+}
+
+.navbar-dropdown-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-weight: 400;
+    display: block;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.navbar-dropdown-link:hover {
+    background: #06477A;
+}
+
+.navbar-dropdown-parent:hover>.navbar-dropdown,
+.navbar-dropdown-parent:focus-within>.navbar-dropdown {
+    display: flex;
+}
+
+.navbar-hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    color: #fff;
+}
+
+.navbar-hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+    .navbar-hamburger {
+        display: flex;
+    }
+
+    .navbar-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #042A4A;
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 0;
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
+
+    .navbar-links li {
+        width: 100%;
+    }
+
+    .navbar-link {
+        padding: 1rem 2rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .navbar-dropdown {
+        position: static;
+        background: #06477A;
+        box-shadow: none;
+        border-radius: 0;
+        display: none;
+    }
+
+    .navbar-dropdown-parent.open .navbar-dropdown {
+        display: flex;
+    }
+}
+
+.published-section {
+    background: #FBF7F1;
+    padding: 3.5rem 0 4rem 0;
+    width: 100%;
+    min-height: 60vh;
+}
+
+.published-title {
+    font-family: 'Century Old Style Std', 'Times New Roman', Times, serif;
+    color: #042A4A;
+    font-size: 2.1rem;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 2rem;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.01em;
+}
+
+.published-content {
+    padding-left: 3.5rem;
+    padding-right: 2rem;
+    max-width: 900px;
+}
+
+.published-meta {
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.15rem;
+    color: #052A4A;
+    margin-bottom: 1.2rem;
+    font-style: normal;
+    padding-left: 2rem;
+}
+
+.published-label {
+    font-family: 'Century Old Style Std', 'Times New Roman', Times, serif;
+    color: #042A4A;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    padding-left: 2rem;
+}
+
+.published-abstract-label,
+.published-keywords-label,
+.published-category-label,
+.published-publishedin-label,
+.published-publishedon-label,
+.published-doi-label {
+    font-family: 'Century Old Style Std', 'Times New Roman', Times, serif;
+    color: #042A4A;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    padding-left: 2rem;
+}
+
+.published-abstract,
+.published-keywords,
+.published-category,
+.published-publishedin,
+.published-publishedon,
+.published-doi {
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.05rem;
+    color: #052A4A;
+    margin-bottom: 1.1rem;
+    font-style: normal;
+    padding-left: 2rem;
+}
+
+.published-keywords-list {
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.05rem;
+    color: #052A4A;
+    font-style: italic;
+    margin-bottom: 1.1rem;
+    padding-left: 2rem;
+}
+
+.published-copyright {
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.02rem;
+    color: #052A4A;
+    margin: 2rem 0 2.5rem 2rem;
+}
+
+.published-btn {
+    display: inline-block;
+    background: #042A4A;
+    color: #FFFEEE;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 0.85rem 2.2rem;
+    border: none;
+    border-radius: 0.7rem;
+    text-decoration: none;
+    margin-left: 2rem;
+    margin-bottom: 2.5rem;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+}
+
+.published-btn:hover {
+    background: #06477A;
+    color: #FFFEEE;
+}
+
+.published-btn-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2.2rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.published-btn {
+    margin-left: 0;
+}
+
+.loading {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #042A4A;
+    font-size: 1.2rem;
+}
+
+.error {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #d32f2f;
+    font-size: 1.2rem;
+}
+
+.not-found {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #042A4A;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+
+    .published-title,
+    .published-meta,
+    .published-label,
+    .published-abstract-label,
+    .published-keywords-label,
+    .published-category-label,
+    .published-publishedin-label,
+    .published-publishedon-label,
+    .published-doi-label,
+    .published-abstract,
+    .published-keywords,
+    .published-category,
+    .published-publishedin,
+    .published-publishedon,
+    .published-doi,
+    .published-keywords-list {
+        padding-left: 1rem;
+    }
+
+    .published-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .published-content {
+        padding-left: 1.2rem;
+        padding-right: 0.7rem;
+    }
+}
+
+.site-footer {
+    background: #042A4A;
+    color: #fff;
+    padding: 2.2rem 1rem 1.5rem 1rem;
+    text-align: center;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+}
+
+.footer-copyright {
+    font-size: 1.08rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.02rem;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 400;
+    transition: opacity 0.2s;
+}
+
+.footer-link:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+}
+
+.footer-sep {
+    color: #fff;
+    font-size: 1.1rem;
+    opacity: 0.7;
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Issues - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/journal-issues.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo-link"><img src="images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo"></a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="index.html" class="navbar-link">Home</a></li>
+      <li><a href="about.html" class="navbar-link">About</a></li>
+      <li class="navbar-dropdown-parent">
+        <a href="#" class="navbar-link navbar-dropdown-label" tabindex="0">Journal Issues</a>
+        <ul class="navbar-dropdown">
+            <li><a href="action-research/school-based.html" class="navbar-dropdown-link">School-Based</a></li>
+          <li><a href="action-research/district-based.html" class="navbar-dropdown-link">District-Based</a></li>
+          <li><a href="action-research/division-based.html" class="navbar-dropdown-link">Division-Based</a></li>
+          <li><a href="action-research/berf-grantee.html" class="navbar-dropdown-link">BERF Grantee</a></li>
+        </ul>
+      </li>
+      <li><a href="submit-a-study.html" class="navbar-link">Submit a Study</a></li>
+      <li><a href="editorial.html" class="navbar-link">Editorial Board</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+  <section class="issues-section">
+    <h2 class="issues-title">Journal Issues</h2>
+    <div class="issues-box">
+      <a href="action-research/school-based.html" class="issue-heading">📘 School-Based Action Research</a>
+      <div class="issue-desc">
+        Research studies conducted and implemented within individual schools, often by a single teacher or a small group of faculty, aimed at addressing specific instructional or operational issues in their immediate school context. These studies reflect practical innovations and problem-solving tailored to each school's unique challenges.
+      </div>
+      <a href="action-research/district-based.html" class="issue-heading">🏫 District-Based Action Research</a>
+      <div class="issue-desc">
+        Research conducted collaboratively by educators across multiple schools within the Sta. Ana District. These projects focus on systemic issues that impact the broader district and typically involve coordinated efforts, shared data, and district-level support for implementation.
+      </div>
+      <a href="action-research/division-based.html" class="issue-heading">🏙️ Division-Based Action Research</a>
+      <div class="issue-desc">
+        Wider in scope, these studies are supported or recognized by the Schools Division Office of Davao City. Division-Based Action Research tackles policy-level, curriculum-wide, or multi-school concerns and often serves as reference for improving practices across various districts. Action Research under this category are also studies whom the authors were participants during the Division-Wide Training and Writeshop for Action Research.
+      </div>
+      <a href="action-research/berf-grantee.html" class="issue-heading">🎓 Basic Education Research Fund (BERF) Grantee Action Research</a>
+      <div class="issue-desc">
+        Rigorous research studies funded through the Department of Education's BERF program. These projects meet strict criteria for methodological soundness and relevance and are often used as evidence-based inputs in policymaking and large-scale educational reforms.
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        links.classList.toggle('active');
+      }
+    });
+    // Dropdown for Journal Issues (ul/li version)
+    const dropdownParent = document.querySelector('.navbar-dropdown-parent');
+    const dropdownLabel = dropdownParent.querySelector('.navbar-dropdown-label');
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    dropdownLabel.addEventListener('click', function(e) {
+      if (isMobile()) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    dropdownLabel.addEventListener('keypress', function(e) {
+      if (isMobile() && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    // Hide dropdown on resize
+    window.addEventListener('resize', function() {
+      dropdownParent.classList.remove('open');
+    });
+    (function() {
+      var bannerSearchForm = document.querySelector('.banner-search-form');
+      var bannerSearchInput = document.querySelector('.banner-search-input');
+      if (bannerSearchForm && bannerSearchInput && !bannerSearchForm.dataset.redirectBound) {
+        bannerSearchForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var q = bannerSearchInput.value.trim();
+          if (!q) return;
+          window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+        });
+        bannerSearchForm.dataset.redirectBound = 'true';
+      }
+    })();
+  </script>
+</body>
+</html> 

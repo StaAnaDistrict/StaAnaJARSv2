@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Researcher - Administrator Dashboard - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/admin-add-researcher.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo-link"><img src="images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo"></a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="index.html" class="navbar-link">Home</a></li>
+      <li><a href="about.html" class="navbar-link">About</a></li>
+      <li class="navbar-dropdown-parent">
+        <a href="#" class="navbar-link navbar-dropdown-label" tabindex="0">Journal Issues</a>
+        <ul class="navbar-dropdown">
+          <li><a href="action-research/school-based.html" class="navbar-dropdown-link">School-Based</a></li>
+          <li><a href="action-research/district-based.html" class="navbar-dropdown-link">District-Based</a></li>
+          <li><a href="action-research/division-based.html" class="navbar-dropdown-link">Division-Based</a></li>
+          <li><a href="action-research/berf-grantee.html" class="navbar-dropdown-link">BERF Grantee</a></li>
+        </ul>
+      </li>
+      <li><a href="submit-a-study.html" class="navbar-link">Submit a Study</a></li>
+      <li><a href="editorial.html" class="navbar-link">Editorial Board</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <section class="form-section">
+    <div class="form-container">
+      <h2 class="form-title">Add New Researcher Profile</h2>
+      <p class="form-subtitle">Register a new researcher in the system</p>
+      
+      <div class="form-card">
+        <form id="addResearcherForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="profilePicture" class="form-label">Profile Picture</label>
+            <input type="file" id="profilePicture" name="profile_picture" class="form-file" accept="image/*">
+            <div class="profile-picture-preview no-image" id="profilePreview">
+              <div>No image selected</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lastName" class="form-label">Last Name *</label>
+              <input type="text" id="lastName" name="lastName" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="firstName" class="form-label">First Name *</label>
+              <input type="text" id="firstName" name="firstName" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="middleName" class="form-label">Middle Name</label>
+              <input type="text" id="middleName" name="middleName" class="form-input">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="position" class="form-label">Position</label>
+            <input type="text" id="position" name="position" class="form-input" placeholder="e.g., Teacher, Head Teacher, Principal">
+          </div>
+
+          <div class="form-group">
+            <label for="schoolAffiliation" class="form-label">School Affiliation</label>
+            <input type="text" id="schoolAffiliation" name="schoolAffiliation" class="form-input" placeholder="Name of school">
+          </div>
+
+          <div class="form-group">
+            <label for="schoolAddress" class="form-label">School Address</label>
+            <textarea id="schoolAddress" name="schoolAddress" class="form-textarea" placeholder="Complete address of the school"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="emailAddress" class="form-label">Email Address *</label>
+            <input type="email" id="emailAddress" name="emailAddress" class="form-input" required placeholder="Valid school email address">
+          </div>
+
+          <div class="form-group">
+            <label for="highestDegree" class="form-label">Highest Degree Attained</label>
+            <select id="highestDegree" name="highestDegree" class="form-select">
+              <option value="">Select Degree</option>
+              <option value="Bachelors Degree">Bachelors Degree</option>
+              <option value="Masters Degree (Units)">Masters Degree (Units)</option>
+              <option value="Masters Degree (C.A.R.)">Masters Degree (C.A.R.)</option>
+              <option value="Masters Degree (Full Fledge)">Masters Degree (Full Fledge)</option>
+              <option value="Doctorate Degree (Units)">Doctorate Degree (Units)</option>
+              <option value="Doctorate Degree (C.A.R.)">Doctorate Degree (C.A.R.)</option>
+              <option value="Doctorate Degree (Full Fledge)">Doctorate Degree (Full Fledge)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="yearsInService" class="form-label">No. of Years in Service</label>
+            <input type="number" id="yearsInService" name="yearsInService" class="form-input" min="0" placeholder="Number of years">
+          </div>
+
+          <div class="form-group">
+            <label for="researchPublished" class="form-label">Research Published</label>
+            <textarea id="researchPublished" name="researchPublished" class="form-textarea" placeholder="Note: Research publications will be automatically tracked when you add research studies with this researcher as an author. This field is for reference only." readonly></textarea>
+            <small style="color: #666; font-size: 0.9rem;">Research publications are automatically tracked when you add research studies with this researcher as an author.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="recognitionsReceived" class="form-label">Recognitions Received</label>
+            <textarea id="recognitionsReceived" name="recognitionsReceived" class="form-textarea" placeholder="Note: Recognitions will be managed separately through the recognitions system. This field is for reference only." readonly></textarea>
+            <small style="color: #666; font-size: 0.9rem;">Recognitions will be managed separately through the recognitions system.</small>
+          </div>
+
+          <div id="errorMessage" class="error-message"></div>
+          <div id="successMessage" class="success-message"></div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="saveBtn">Save Researcher</button>
+            <a href="admin-dashboard.html" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Check authentication
+    window.addEventListener('load', function() {
+      const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+      if (isLoggedIn !== 'true') {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+    });
+
+    // Profile picture preview
+    document.getElementById('profilePicture').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('profilePreview');
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Profile Preview">`;
+          preview.className = 'profile-picture-preview';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.innerHTML = '<div>No image selected</div>';
+        preview.className = 'profile-picture-preview no-image';
+      }
+    });
+
+    // Form submission
+    document.getElementById('addResearcherForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const saveBtn = document.getElementById('saveBtn');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      // Clear messages
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      // Disable button
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        // Collect form data
+        const formData = new FormData(this);
+        
+        // Send to API
+        const response = await fetch('/api/researchers', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        successMessage.textContent = 'Researcher added successfully!';
+        successMessage.style.display = 'block';
+        
+        // Check if this was opened from research form
+        const isFromResearchForm = sessionStorage.getItem('fromResearchForm') === 'true';
+        
+        // Reset form after short delay
+        setTimeout(() => {
+          this.reset();
+          document.getElementById('profilePreview').innerHTML = '<div>No image selected</div>';
+          document.getElementById('profilePreview').className = 'profile-picture-preview no-image';
+          
+          if (isFromResearchForm) {
+            // Clear the flag and redirect back to research form
+            sessionStorage.removeItem('fromResearchForm');
+            window.location.href = 'admin-add-research.html';
+          } else {
+            window.location.href = 'admin-dashboard.html';
+          }
+        }, 2000);
+
+      } catch (error) {
+        console.error('Error adding researcher:', error);
+        errorMessage.textContent = error.message || 'Error adding researcher. Please try again.';
+        errorMessage.style.display = 'block';
+      } finally {
+        // Re-enable button
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Researcher';
+      }
+    });
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        links.classList.toggle('active');
+      }
+    });
+
+    // Dropdown for Journal Issues
+    const dropdownParent = document.querySelector('.navbar-dropdown-parent');
+    const dropdownLabel = dropdownParent.querySelector('.navbar-dropdown-label');
+    
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    
+    dropdownLabel.addEventListener('click', function(e) {
+      if (isMobile()) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    
+    dropdownLabel.addEventListener('keypress', function(e) {
+      if (isMobile() && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    
+    // Hide dropdown on resize
+    window.addEventListener('resize', function() {
+      dropdownParent.classList.remove('open');
+    });
+  </script>
+</body>
+</html> 

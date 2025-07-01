@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrator Login - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/admin-login.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo-link"><img src="images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo"></a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="index.html" class="navbar-link">Home</a></li>
+      <li><a href="about.html" class="navbar-link">About</a></li>
+      <li class="navbar-dropdown-parent">
+        <a href="#" class="navbar-link navbar-dropdown-label" tabindex="0">Journal Issues</a>
+        <ul class="navbar-dropdown">
+          <li><a href="action-research/school-based.html" class="navbar-dropdown-link">School-Based</a></li>
+          <li><a href="action-research/district-based.html" class="navbar-dropdown-link">District-Based</a></li>
+          <li><a href="action-research/division-based.html" class="navbar-dropdown-link">Division-Based</a></li>
+          <li><a href="action-research/berf-grantee.html" class="navbar-dropdown-link">BERF Grantee</a></li>
+        </ul>
+      </li>
+      <li><a href="submit-a-study.html" class="navbar-link">Submit a Study</a></li>
+      <li><a href="editorial.html" class="navbar-link">Editorial Board</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <section class="login-section">
+    <div class="login-container">
+      <h2 class="login-title" id="pageTitle">Administrator Login</h2>
+      
+      <!-- Mode Toggle -->
+      <div class="mode-toggle">
+        <button class="toggle-btn active" id="loginToggle" onclick="switchToLogin()">Login</button>
+        <button class="toggle-btn" id="registerToggle" onclick="switchToRegister()">Register</button>
+      </div>
+      
+      <!-- Login Form -->
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername" class="form-label">Username</label>
+          <input type="text" id="loginUsername" name="username" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword" class="form-label">Password</label>
+          <input type="password" id="loginPassword" name="password" class="form-input" required>
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">Login</button>
+      </form>
+
+      <!-- Registration Form -->
+      <form class="login-form" id="registerForm" style="display: none;">
+        <div class="form-group">
+          <label for="registerUsername" class="form-label">Username</label>
+          <input type="text" id="registerUsername" name="username" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword" class="form-label">Password</label>
+          <input type="password" id="registerPassword" name="password" class="form-input" required minlength="6" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$">
+          <div id="passwordRequirement" style="color:#d32f2f; font-size:0.9rem; display:none;">Password must be at least 6 characters and contain both letters and numbers.</div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+          <div id="passwordMatch" style="font-size:0.9rem; display:none;"></div>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail" class="form-label">Email Address</label>
+          <input type="email" id="registerEmail" name="email" class="form-input">
+        </div>
+        <button type="submit" class="login-btn" id="registerBtn">Register</button>
+      </form>
+
+      <div id="errorMessage" class="error-message"></div>
+      <div id="successMessage" class="success-message"></div>
+      
+      <div class="back-link">
+        <a href="site-map.html">← Back to Site Map</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mode switching functions
+    function switchToLogin() {
+      document.getElementById('pageTitle').textContent = 'Administrator Login';
+      document.getElementById('loginToggle').classList.add('active');
+      document.getElementById('registerToggle').classList.remove('active');
+      document.getElementById('loginForm').style.display = 'flex';
+      document.getElementById('registerForm').style.display = 'none';
+      clearMessages();
+    }
+
+    function switchToRegister() {
+      document.getElementById('pageTitle').textContent = 'User Registration';
+      document.getElementById('registerToggle').classList.add('active');
+      document.getElementById('loginToggle').classList.remove('active');
+      document.getElementById('registerForm').style.display = 'flex';
+      document.getElementById('loginForm').style.display = 'none';
+      clearMessages();
+    }
+
+    function clearMessages() {
+      document.getElementById('errorMessage').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'none';
+    }
+
+    // Login form submission
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const loginBtn = document.getElementById('loginBtn');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Logging in...';
+
+      try {
+        const formData = new FormData(this);
+        const loginData = {
+          username: formData.get('username'),
+          password: formData.get('password')
+        };
+
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(loginData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        sessionStorage.setItem('adminToken', result.token);
+        sessionStorage.setItem('adminUser', JSON.stringify(result.user));
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        
+        successMessage.textContent = 'Login successful! Redirecting...';
+        successMessage.style.display = 'block';
+        
+        setTimeout(() => {
+          window.location.href = 'admin-dashboard.html';
+        }, 1000);
+
+      } catch (error) {
+        console.error('Login error:', error);
+        errorMessage.textContent = error.message || 'Login failed. Please check your credentials.';
+        errorMessage.style.display = 'block';
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Login';
+      }
+    });
+
+    // Registration form submission
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const registerBtn = document.getElementById('registerBtn');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      if (password !== confirmPassword) {
+        errorMessage.textContent = 'Passwords do not match';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      registerBtn.disabled = true;
+      try {
+        const res = await fetch('/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('registerUsername').value,
+            password,
+            email: document.getElementById('registerEmail').value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Registration failed');
+        successMessage.textContent = 'Registration successful! Your account is pending approval by an administrator.';
+        successMessage.style.display = 'block';
+        document.getElementById('registerForm').reset();
+      } catch (err) {
+        errorMessage.textContent = 'Registration error: ' + err;
+        errorMessage.style.display = 'block';
+      } finally {
+        registerBtn.disabled = false;
+      }
+    });
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        links.classList.toggle('active');
+      }
+    });
+
+    // Dropdown for Journal Issues
+    const dropdownParent = document.querySelector('.navbar-dropdown-parent');
+    const dropdownLabel = dropdownParent.querySelector('.navbar-dropdown-label');
+    
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    
+    dropdownLabel.addEventListener('click', function(e) {
+      if (isMobile()) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    
+    dropdownLabel.addEventListener('keypress', function(e) {
+      if (isMobile() && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    
+    // Hide dropdown on resize
+    window.addEventListener('resize', function() {
+      dropdownParent.classList.remove('open');
+    });
+
+    // Password validation and match check
+    (function() {
+      var passwordInput = document.getElementById('registerPassword');
+      var confirmInput = document.getElementById('confirmPassword');
+      var matchDiv = document.getElementById('passwordMatch');
+      var requirementDiv = document.getElementById('passwordRequirement');
+      function validatePassword() {
+        var val = passwordInput.value;
+        var valid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(val);
+        if (!valid && val.length > 0) {
+          requirementDiv.style.display = 'block';
+        } else {
+          requirementDiv.style.display = 'none';
+        }
+        return valid;
+      }
+      function checkMatch() {
+        var pass = passwordInput.value;
+        var conf = confirmInput.value;
+        if (conf.length === 0) {
+          matchDiv.style.display = 'none';
+          return;
+        }
+        if (pass === conf) {
+          matchDiv.textContent = 'Passwords match.';
+          matchDiv.style.color = '#2e7d32';
+          matchDiv.style.display = 'block';
+        } else {
+          matchDiv.textContent = 'Passwords do not match.';
+          matchDiv.style.color = '#d32f2f';
+          matchDiv.style.display = 'block';
+        }
+      }
+      if (passwordInput && confirmInput) {
+        passwordInput.addEventListener('input', function() {
+          validatePassword();
+          checkMatch();
+        });
+        confirmInput.addEventListener('input', checkMatch);
+      }
+      // Prevent form submission if password invalid or mismatch
+      var registerForm = document.getElementById('registerForm');
+      if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+          var valid = validatePassword();
+          var pass = passwordInput.value;
+          var conf = confirmInput.value;
+          if (!valid) {
+            requirementDiv.style.display = 'block';
+            e.preventDefault();
+            return;
+          }
+          if (pass !== conf) {
+            matchDiv.textContent = 'Passwords do not match.';
+            matchDiv.style.color = '#d32f2f';
+            matchDiv.style.display = 'block';
+            e.preventDefault();
+            return;
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html> 

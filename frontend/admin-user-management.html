@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/admin-user-management.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo-link">
+      <img src="images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo">
+    </a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="admin-dashboard.html" class="navbar-link">Dashboard</a></li>
+      <li><a href="admin-add-research.html" class="navbar-link">Add Research</a></li>
+      <li><a href="admin-add-researcher.html" class="navbar-link">Add Researcher</a></li>
+      <li><a href="admin-manage-recognitions.html" class="navbar-link">Recognitions</a></li>
+      <li><a href="admin-user-management.html" class="navbar-link">User Management</a></li>
+      <li><a href="#" class="navbar-link" onclick="logout()">Logout</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
+    
+    <h1 class="page-title">User Management</h1>
+    
+    <div id="messageContainer"></div>
+    
+    <!-- Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="totalUsers">-</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="activeUsers">-</div>
+        <div class="stat-label">Active Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="pendingUsers">-</div>
+        <div class="stat-label">Pending Approval</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="adminUsers">-</div>
+        <div class="stat-label">Administrators</div>
+      </div>
+    </div>
+
+    <!-- Pending Approvals Section -->
+    <h2 class="section-title">Pending Approvals</h2>
+    <div id="pendingUsersContainer" class="users-grid">
+      <div class="loading">Loading pending users...</div>
+    </div>
+
+    <!-- Active Users Section -->
+    <h2 class="section-title">Active Users</h2>
+    <div id="activeUsersContainer" class="users-grid">
+      <div class="loading">Loading active users...</div>
+    </div>
+  </div>
+
+  <script>
+    // Check authentication and main admin access
+    function checkAuth() {
+      const token = sessionStorage.getItem('adminToken');
+      const user = JSON.parse(sessionStorage.getItem('adminUser') || '{}');
+      if (!token || !user.role || user.role !== 'admin' || user.username !== 'JARS_Admin') {
+        window.location.href = 'admin-dashboard.html';
+        return false;
+      }
+      return true;
+    }
+
+    // Logout function
+    function logout() {
+      sessionStorage.removeItem('adminToken');
+      sessionStorage.removeItem('adminUser');
+      sessionStorage.removeItem('adminLoggedIn');
+      window.location.href = 'admin-login.html';
+    }
+
+    // Show message
+    function showMessage(message, type = 'success') {
+      const container = document.getElementById('messageContainer');
+      container.innerHTML = `<div class="${type}">${message}</div>`;
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 5000);
+    }
+
+    // Fetch users and render cards
+    async function loadUsers() {
+      const usersGrid = document.querySelector('.users-grid');
+      usersGrid.innerHTML = '<div>🔄 Loading users...</div>';
+      try {
+        const res = await fetch('/api/users');
+        if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + res.statusText);
+        const users = await res.json();
+        usersGrid.innerHTML = '';
+        const adminUser = JSON.parse(sessionStorage.getItem('adminUser') || '{}');
+        users.forEach(user => {
+          const card = document.createElement('div');
+          card.className = 'user-card';
+          card.innerHTML = `
+            <div class="user-header">
+              <span class="user-name">${user.username}</span>
+              <span class="user-status ${user.is_active ? 'status-active' : 'status-pending'}">
+                ${user.is_active ? 'Active' : 'Pending'}
+              </span>
+            </div>
+            <div class="user-details">
+              <div class="user-detail"><span class="user-detail-label">Email:</span> <span class="user-detail-value">${user.email || ''}</span></div>
+              <div class="user-detail"><span class="user-detail-label">Role:</span> <span class="user-detail-value">${user.role}</span></div>
+            </div>
+            <div class="user-actions"></div>
+          `;
+          const actions = card.querySelector('.user-actions');
+          // Only main admin can approve/reject, and only for pending users
+          if (adminUser && adminUser.username === 'JARS_Admin' && !user.is_active) {
+            const approveBtn = document.createElement('button');
+            approveBtn.className = 'btn btn-success';
+            approveBtn.textContent = 'Approve';
+            approveBtn.onclick = async () => {
+              await fetch(`/api/users/${user.user_id}/approve`, {
+                method: 'PUT',
+                headers: { 'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}` }
+              });
+              loadUsers();
+            };
+            actions.appendChild(approveBtn);
+            const rejectBtn = document.createElement('button');
+            rejectBtn.className = 'btn btn-danger';
+            rejectBtn.textContent = 'Reject';
+            rejectBtn.onclick = async () => {
+              await fetch(`/api/users/${user.user_id}/reject`, {
+                method: 'PUT',
+                headers: { 'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}` }
+              });
+              loadUsers();
+            };
+            actions.appendChild(rejectBtn);
+          }
+          // Allow editing only own account
+          if (adminUser && adminUser.username === user.username) {
+            const editBtn = document.createElement('button');
+            editBtn.className = 'btn btn-primary';
+            editBtn.textContent = 'Edit Account';
+            editBtn.onclick = () => editAccount(user);
+            actions.appendChild(editBtn);
+          }
+          usersGrid.appendChild(card);
+        });
+        updateStats(users);
+      } catch (err) {
+        usersGrid.innerHTML = `<div style="color:#d32f2f;">❌ Error loading users: ${err}</div>`;
+      }
+    }
+
+    // Update statistics
+    function updateStats(users) {
+      document.getElementById('totalUsers').textContent = users.length;
+      document.getElementById('activeUsers').textContent = users.filter(u => u.is_active).length;
+      document.getElementById('pendingUsers').textContent = users.filter(u => !u.is_active).length;
+      document.getElementById('adminUsers').textContent = users.filter(u => u.role === 'admin').length;
+    }
+
+    // Edit user
+    function editUser(userId) {
+      // For now, just show a simple edit form
+      const newUsername = prompt('Enter new username:');
+      if (newUsername) {
+        updateUser(userId, { username: newUsername });
+      }
+    }
+
+    // Update user
+    async function updateUser(userId, userData) {
+      try {
+        const response = await fetch(`/api/users/${userId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}`
+          },
+          body: JSON.stringify(userData)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        showMessage('User updated successfully!');
+        loadUsers(); // Reload the list
+
+      } catch (error) {
+        console.error('Error updating user:', error);
+        showMessage(`Error updating user: ${error.message}`, 'error');
+      }
+    }
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+
+    // Initialize page
+    if (checkAuth()) {
+      loadUsers();
+    }
+  </script>
+</body>
+</html> 

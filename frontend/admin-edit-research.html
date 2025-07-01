@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Research - Administrator Dashboard - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/admin-edit-research.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo-link"><img src="images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo"></a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="index.html" class="navbar-link">Home</a></li>
+      <li><a href="about.html" class="navbar-link">About</a></li>
+      <li><a href="admin-dashboard.html" class="navbar-link">Admin Dashboard</a></li>
+      <li><a href="admin-add-research.html" class="navbar-link">Add Research</a></li>
+      <li><a href="admin-add-researcher.html" class="navbar-link">Add Researcher</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <section class="form-section">
+    <div class="form-container">
+      <h2 class="form-title">Edit Existing Research</h2>
+      <p class="form-subtitle">Select and modify research studies</p>
+      
+      <div class="form-card">
+        <div class="search-section">
+          <h3>Select Research to Edit</h3>
+          <input type="text" id="searchResearch" placeholder="Search research by title..." class="form-input">
+          <div class="research-list" id="researchList">
+            <!-- Research items will be loaded here -->
+          </div>
+        </div>
+
+        <form id="editResearchForm" style="display: none;">
+          <div class="form-group">
+            <label for="researchCategory" class="form-label">Research Category *</label>
+            <select id="researchCategory" name="researchCategory" class="form-select" required>
+              <option value="">Select Category</option>
+              <option value="School-Based">School-Based</option>
+              <option value="District-Based">District-Based</option>
+              <option value="Division-Based">Division-Based</option>
+              <option value="BERF-Grantee">BERF-Grantee</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="researchTitle" class="form-label">Research Title *</label>
+            <input type="text" id="researchTitle" name="researchTitle" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="researcherName" class="form-label">Name of Researcher(s)</label>
+            <textarea id="researcherName" name="researcherName" class="form-textarea" rows="3" placeholder="Enter researcher names (Last Name, First Name, Middle Initial format)"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="completionYear" class="form-label">Completion Year</label>
+              <input type="number" id="completionYear" name="completionYear" class="form-input" min="1900" max="2030">
+            </div>
+            <div class="form-group">
+              <label for="completionMonth" class="form-label">Completion Month</label>
+              <select id="completionMonth" name="completionMonth" class="form-select">
+                <option value="">Select Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="abstract" class="form-label">Abstract *</label>
+            <textarea id="abstract" name="abstract" class="form-textarea large" maxlength="4000" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="focusCategory" class="form-label">Category</label>
+            <select id="focusCategory" name="focusCategory" class="form-select">
+              <option value="">Select Category</option>
+              <option value="Teaching and Learning">Teaching and Learning</option>
+              <option value="Child Protection">Child Protection</option>
+              <option value="Human Resource Development">Human Resource Development</option>
+              <option value="Governance">Governance</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="onlinePublicationDate" class="form-label">Online Publication Date</label>
+            <input type="date" id="onlinePublicationDate" name="onlinePublicationDate" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="keywords" class="form-label">Keywords</label>
+            <textarea id="keywords" name="keywords" class="form-textarea" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="journalIssue" class="form-label">Journal Issue *</label>
+            <input type="number" id="journalIssue" name="journalIssue" class="form-input" min="1" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="volumeIssue" class="form-label">Volume/Issue</label>
+              <input type="text" id="volumeIssue" name="volumeIssue" class="form-input">
+            </div>
+            <div class="form-group">
+              <label for="pages" class="form-label">Pages</label>
+              <input type="text" id="pages" name="pages" class="form-input">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="publishedIn" class="form-label">Published In</label>
+            <input type="text" id="publishedIn" name="publishedIn" class="form-input" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="publishedOn" class="form-label">Published On</label>
+            <input type="text" id="publishedOn" name="publishedOn" class="form-input" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="doi" class="form-label">DOI</label>
+            <input type="text" id="doi" name="doi" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="researchUrl" class="form-label">PDF URL</label>
+            <input type="url" id="researchUrl" name="researchUrl" class="form-input">
+          </div>
+
+          <div id="errorMessage" class="error-message"></div>
+          <div id="successMessage" class="success-message"></div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="updateBtn">Update Research</button>
+            <a href="admin-dashboard.html" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Check authentication
+    window.addEventListener('load', function() {
+      const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+      if (isLoggedIn !== 'true') {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+      loadResearchList();
+    });
+
+    let selectedResearchId = null;
+
+    // Load research list
+    async function loadResearchList() {
+      try {
+        console.log('🔄 Loading research list...');
+        const response = await fetch('/api/researches?limit=100');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('✅ Research list loaded:', data.researches.length, 'items');
+        displayResearchList(data.researches);
+      } catch (error) {
+        console.error('❌ Error loading research list:', error);
+        const listContainer = document.getElementById('researchList');
+        listContainer.innerHTML = '<div class="research-item">Error loading research list. Please try again.</div>';
+      }
+    }
+
+    // Display research list
+    function displayResearchList(researches) {
+      const listContainer = document.getElementById('researchList');
+      listContainer.innerHTML = '';
+
+      if (researches.length === 0) {
+        listContainer.innerHTML = '<div class="research-item">No research studies found.</div>';
+        return;
+      }
+
+      researches.forEach(research => {
+        const item = document.createElement('div');
+        item.className = 'research-item';
+        item.innerHTML = `
+          <strong>${research.research_title || 'Untitled Research'}</strong><br>
+          <small>${research.type_name || 'Unknown Type'} - ${research.completion_year || 'No Year'}</small>
+        `;
+        item.onclick = (event) => selectResearch(research.research_id, event);
+        listContainer.appendChild(item);
+      });
+    }
+
+    // Select research to edit
+    async function selectResearch(researchId, event) {
+      try {
+        console.log('🔄 Loading research details for ID:', researchId);
+        const response = await fetch(`/api/researches/${researchId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('✅ Research details loaded:', data);
+        populateForm(data.research, data.authors);
+        selectedResearchId = researchId;
+        
+        // Highlight selected item
+        document.querySelectorAll('.research-item').forEach(item => {
+          item.classList.remove('selected');
+        });
+        if (event && event.target) {
+          event.target.closest('.research-item').classList.add('selected');
+        }
+        
+        document.getElementById('editResearchForm').style.display = 'block';
+      } catch (error) {
+        console.error('❌ Error loading research details:', error);
+        alert('Error loading research details. Please try again.');
+      }
+    }
+
+    // Populate form with research data
+    function populateForm(research, authors) {
+      document.getElementById('researchTitle').value = research.research_title || '';
+      document.getElementById('abstract').value = research.abstract || '';
+      document.getElementById('keywords').value = research.keywords || '';
+      document.getElementById('completionYear').value = research.completion_year || '';
+      document.getElementById('completionMonth').value = research.completion_month || '';
+      document.getElementById('onlinePublicationDate').value = research.online_publication_date || '';
+      document.getElementById('journalIssue').value = research.journal_issue_number || '';
+      document.getElementById('volumeIssue').value = research.volume_issue || '';
+      document.getElementById('pages').value = research.pages || '';
+      document.getElementById('doi').value = research.doi || '';
+      document.getElementById('researchUrl').value = research.research_url || '';
+
+      // Set category dropdowns
+      document.getElementById('researchCategory').value = research.type_name || '';
+      document.getElementById('focusCategory').value = research.category_name || '';
+
+      // Set researcher names
+      if (authors && authors.length > 0) {
+        const researcherNames = authors.map(author => 
+          `${author.last_name}, ${author.first_name} ${author.middle_name || ''}`.trim()
+        ).join('; ');
+        document.getElementById('researcherName').value = researcherNames;
+      } else {
+        document.getElementById('researcherName').value = '';
+      }
+
+      // Set published fields from database
+      document.getElementById('publishedIn').value = research.published_in || '';
+      document.getElementById('publishedOn').value = research.published_on || '';
+
+      // Update auto-generated fields after a small delay to ensure all fields are set
+      setTimeout(() => {
+        updateAutoGeneratedFields();
+      }, 100);
+    }
+
+    // Update auto-generated fields
+    function updateAutoGeneratedFields() {
+      const category = document.getElementById('researchCategory').value;
+      const month = document.getElementById('completionMonth').value;
+      const year = document.getElementById('completionYear').value;
+      const journalIssue = document.getElementById('journalIssue').value;
+      const publicationDate = document.getElementById('onlinePublicationDate').value;
+
+      if (category && month && year) {
+        document.getElementById('publishedIn').value = `${category} Action Research. Completed in ${month} of ${year}.`;
+      }
+
+      if (category && journalIssue && publicationDate) {
+        const date = new Date(publicationDate);
+        const formattedDate = date.toLocaleDateString('en-US', { 
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        document.getElementById('publishedOn').value = `${category} Action Research Sta. Ana JARS Journal Issue ${journalIssue}, ${formattedDate}`;
+      }
+    }
+
+    // Search functionality
+    document.getElementById('searchResearch').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const items = document.querySelectorAll('.research-item');
+      
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+      });
+    });
+
+    // Form submission
+    document.getElementById('editResearchForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      if (!selectedResearchId) {
+        alert('Please select a research to edit');
+        return;
+      }
+
+      const updateBtn = document.getElementById('updateBtn');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      updateBtn.disabled = true;
+      updateBtn.textContent = 'Updating...';
+
+      try {
+        const formData = new FormData(this);
+        const researchData = {
+          research_title: formData.get('researchTitle'),
+          abstract: formData.get('abstract'),
+          keywords: formData.get('keywords'),
+          completion_year: parseInt(formData.get('completionYear')) || null,
+          completion_month: formData.get('completionMonth'),
+          online_publication_date: formData.get('onlinePublicationDate'),
+          journal_issue_number: parseInt(formData.get('journalIssue')),
+          volume_issue: formData.get('volumeIssue'),
+          pages: formData.get('pages'),
+          doi: formData.get('doi'),
+          research_url: formData.get('researchUrl'),
+          action_research_type_id: getResearchTypeId(formData.get('researchCategory')),
+          research_focus_category_id: getFocusCategoryId(formData.get('focusCategory')),
+          published_in: document.getElementById('publishedIn').value,
+          published_on: document.getElementById('publishedOn').value
+        };
+
+        const response = await fetch(`/api/researches/${selectedResearchId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(researchData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        successMessage.textContent = 'Research updated successfully!';
+        successMessage.style.display = 'block';
+        
+        setTimeout(() => {
+          window.location.href = 'admin-dashboard.html';
+        }, 2000);
+
+      } catch (error) {
+        console.error('Error updating research:', error);
+        errorMessage.textContent = error.message || 'Error updating research. Please try again.';
+        errorMessage.style.display = 'block';
+      } finally {
+        updateBtn.disabled = false;
+        updateBtn.textContent = 'Update Research';
+      }
+    });
+
+    // Helper functions for category IDs
+    function getResearchTypeId(typeName) {
+      const typeMap = {
+        'School-Based': 1,
+        'District-Based': 2,
+        'Division-Based': 3,
+        'BERF-Grantee': 4
+      };
+      return typeMap[typeName] || null;
+    }
+
+    function getFocusCategoryId(categoryName) {
+      const categoryMap = {
+        'Teaching and Learning': 1,
+        'Child Protection': 2,
+        'Human Resource Development': 3,
+        'Governance': 4
+      };
+      return categoryMap[categoryName] || null;
+    }
+
+    // Update auto-generated fields when inputs change
+    ['researchCategory', 'completionMonth', 'completionYear', 'journalIssue', 'onlinePublicationDate'].forEach(id => {
+      const element = document.getElementById(id);
+      element.addEventListener('change', updateAutoGeneratedFields);
+      // Add input event for number fields
+      if (id === 'completionYear' || id === 'journalIssue') {
+        element.addEventListener('input', updateAutoGeneratedFields);
+      }
+    });
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        links.classList.toggle('active');
+      }
+    });
+  </script>
+</body>
+</html> 

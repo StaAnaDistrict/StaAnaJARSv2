@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sta. Ana Journal of Action Research Studies (JARS) 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/svg" href="/images/jarslogo.svg">
+  <meta name="description" content="Sta. Ana JARS is a digital platform for publishing original, peer-reviewed action research by educators from the school, district, division, and regional levels.">
+
+  <!-- Open Graph Meta Tags (for social sharing like Facebook/Messenger) -->
+  <meta property="og:title" content="Sta. Ana JARS – Journal of Action Research Studies 🏺">
+  <meta property="og:description" content="Explore original research by teachers across the Sta. Ana District, Davao City, Philippines. A home for school-based and BERF-supported studies.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="staanajars.netlify.app">
+  <meta property="og:image" content="/images/StaAnaJARSLogo.png">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sta. Ana JARS – Journal of Action Research Studies 🏺">
+  <meta name="twitter:description" content="A platform for publishing school-based, district, division-level and BERF Grantees' action research.">
+  <meta name="twitter:image" content="/images/StaAnaJARSLogo.png">
+
+  <!-- SEO Keywords (optional) -->
+  <meta name="keywords" content="Sta. Ana, JARS, action research, school-based studies, BERF, education research, Philippines, DepEd, journal">
+
+  <!-- Author -->
+  <meta name="author" content="Wedzmer Munjilul | Sta. Ana Central Elementary School">
+  <!-- Myriad Variable Concept is not available on Google Fonts, so we'll use a similar sans-serif fallback -->
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo-link"><img src="/images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo"></a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="index.html" class="navbar-link">Home</a></li>
+      <li><a href="about.html" class="navbar-link">About</a></li>
+      <li class="navbar-dropdown-parent">
+        <a href="#" class="navbar-link navbar-dropdown-label" tabindex="0">Journal Issues</a>
+        <ul class="navbar-dropdown">
+            <li><a href="action-research/school-based.html" class="navbar-dropdown-link">School-Based</a></li>
+          <li><a href="action-research/district-based.html" class="navbar-dropdown-link">District-Based</a></li>
+          <li><a href="action-research/division-based.html" class="navbar-dropdown-link">Division-Based</a></li>
+          <li><a href="action-research/berf-grantee.html" class="navbar-dropdown-link">BERF Grantee</a></li>
+        </ul>
+      </li>
+      <li><a href="submit-a-study.html" class="navbar-link">Submit a Study</a></li>
+      <li><a href="editorial.html" class="navbar-link">Editorial Board</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+  <section class="banner-section">
+    <div class="banner-search-container">
+      <button id="bannerSearchBtn" class="banner-search-btn" aria-label="Open search"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="7.5" stroke="#042A4A" stroke-width="2"/><line x1="16.0607" y1="16.3536" x2="20" y2="20.2929" stroke="#042A4A" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <input type="text" id="latestSearch" class="banner-search-input" placeholder="Search latest..." aria-label="Search latest studies">
+    </div>
+    <div class="banner-content">
+      <h1 class="banner-header">Showcasing Action Research<br>from Sta. Ana District Schools</h1>
+      <p class="banner-subheader">A curated repository of innovation and inquiry by Sta. Ana District Faculty</p>
+      <div class="banner-buttons">
+        <a href="journal-issues.html" class="banner-btn banner-btn-primary">Browse Latest Issue</a>
+        <a href="submit-a-study.html" class="banner-btn banner-btn-secondary">Submit Your Study</a>
+      </div>
+    </div>
+  </section>
+  <section class="latest-section">
+    <h2 class="latest-title">Latest from Sta. Ana JARS 🏺</h2>
+    <div class="latest-boxes">
+      <div class="latest-box">
+        <div class="latest-box-title">Action Research Title 1 Study Here</div>
+        <div class="latest-box-author">Name of Author 1 Here</div>
+        <div class="latest-box-desc">Description  from the Abstract of the study will be placed in this short text box... Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old...</div>
+        <div class="latest-box-category">Research Category</div>
+        <div class="latest-box-readmore">Read More...</div>
+      </div>
+      <div class="latest-box">
+        <div class="latest-box-title">Action Research Title 2 Study Here</div>
+        <div class="latest-box-author">Name of Author 2 Here</div>
+        <div class="latest-box-desc">Description coming from the Abstract of the study will be placed in this short text box... Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source...</div>
+        <div class="latest-box-category">Research Category</div>
+        <div class="latest-box-readmore">Read More...</div>
+      </div>
+      <div class="latest-box">
+        <div class="latest-box-title">Action Research Title 3 Study Here</div>
+        <div class="latest-box-author">Name of Author 3 Here</div>
+        <div class="latest-box-desc">Description coming from the Abstract of the study will be placed in this short text box... The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham...</div>
+        <div class="latest-box-category">Research Category</div>
+        <div class="latest-box-readmore">Read More...</div>
+      </div>
+      <div class="latest-box">
+        <div class="latest-box-title">Action Research Title 4 Study Here</div>
+        <div class="latest-box-author">Name of Author 4 Here</div>
+        <div class="latest-box-desc">Description coming from the Abstract of the study will be placed in this short text box... There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words...</div>
+        <div class="latest-box-category">Research Category</div>
+        <div class="latest-box-readmore">Read More...</div>
+      </div>
+    </div>
+  </section>
+  <section class="info-section">
+    <div class="info-grid">
+      <!-- Left: Meet our Researchers -->
+      <div class="researchers-col">
+        <h2 class="info-title">Featured Researchers</h2>
+        <div class="researchers-grid">
+          <div class="researcher-box">
+            <img src="/images/Woman1 copy.png" alt="Researcher 1" class="researcher-img">
+            <div class="researcher-name">Name of Teacher 1</div>
+            <div class="researcher-position">Position 1</div>
+            <div class="researcher-profile">View Profile 1</div>
+          </div>
+          <div class="researcher-box">
+            <img src="/images/Woman1 copy 2.png" alt="Researcher 2" class="researcher-img">
+            <div class="researcher-name">Name of Teacher 2</div>
+            <div class="researcher-position">Position 2</div>
+            <div class="researcher-profile">View Profile 2</div>
+          </div>
+          <div class="researcher-box">
+            <img src="/images/Man1 copy.png" alt="Researcher 3" class="researcher-img">
+            <div class="researcher-name">Name of Teacher 3</div>
+            <div class="researcher-position">Position 3</div>
+            <div class="researcher-profile">View Profile 3</div>
+          </div>
+          <div class="researcher-box">
+            <img src="/images/Man1 copy 2.png" alt="Researcher 4" class="researcher-img">
+            <div class="researcher-name">Name of Teacher 4</div>
+            <div class="researcher-position">Position 4</div>
+            <div class="researcher-profile">View Profile 4</div>
+          </div>
+          <div class="researcher-box">
+            <img src="/images/Man1 copy 3.png" alt="Researcher 5" class="researcher-img">
+            <div class="researcher-name">Name of Teacher 5</div>
+            <div class="researcher-position">Position 5</div>
+            <div class="researcher-profile">View Profile 5</div>
+          </div>
+          <div class="researcher-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px;">
+            <div style="font-size: 1.1rem; color: #042A4A; font-weight: 600; text-align: center; margin-bottom: 0.7rem;">
+              See All Recognized Researchers
+            </div>
+            <a href="/researchers-profiles.html"
+               class="howtosubmit-btn"
+               style="margin-top: 0.5rem; text-decoration: none; color: #fff; background: #042A4A; border-radius: 2rem; padding: 0.6rem 1.5rem; font-size: 1rem; font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;">
+              View Directory
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Right: How to Submit + Testimonial -->
+      <div class="howtosubmit-col">
+        <h2 class="info-title">How to Submit</h2>
+        <div class="howtosubmit-steps">
+          <div class="howtosubmit-step">
+            <img src="/images/Doc1.svg" alt="Prepare Manuscript" class="howtosubmit-icon">
+            <div class="howtosubmit-label">Prepare a Manuscript</div>
+          </div>
+          <div class="howtosubmit-divider"></div>
+          <div class="howtosubmit-step">
+            <img src="/images/Doc2.svg" alt="Submission Guidelines" class="howtosubmit-icon">
+            <div class="howtosubmit-label">Follow Submission Guidelines</div>
+          </div>
+          <div class="howtosubmit-divider"></div>
+          <div class="howtosubmit-step">
+            <img src="/images//Doc3.svg" alt="Upload & Review" class="howtosubmit-icon">
+            <div class="howtosubmit-label">Upload & Review</div>
+          </div>
+        </div>
+        <div class="howtosubmit-btn-row">
+          <a href="submit-a-study.html" class="howtosubmit-btn">Submit Now</a>
+        </div>
+        <div class="testimonial-box">
+          <div class="testimonial-quote">&ldquo;</div>
+          <div class="testimonial-text">Sharing my research through Sta. Ana JARS has been a... continue testimonial message from researcher about the positive impact of the research publication here</div>
+          <div class="testimonial-author">Name of Faculty</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        links.classList.toggle('active');
+      }
+    });
+    // Dropdown for Journal Issues (ul/li version)
+    const dropdownParent = document.querySelector('.navbar-dropdown-parent');
+    const dropdownLabel = dropdownParent.querySelector('.navbar-dropdown-label');
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    dropdownLabel.addEventListener('click', function(e) {
+      if (isMobile()) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    dropdownLabel.addEventListener('keypress', function(e) {
+      if (isMobile() && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    // Hide dropdown on resize
+    window.addEventListener('resize', function() {
+      dropdownParent.classList.remove('open');
+    });
+    // Mobile search expand/collapse
+    const bannerSearchBtn = document.getElementById('bannerSearchBtn');
+    const bannerSearchInput = document.getElementById('latestSearch');
+    const bannerSearchContainer = document.querySelector('.banner-search-container');
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    bannerSearchBtn.addEventListener('click', function() {
+      if (isMobile()) {
+        bannerSearchContainer.classList.add('expanded');
+        bannerSearchInput.style.display = 'block';
+        setTimeout(() => bannerSearchInput.focus(), 100);
+      }
+    });
+    bannerSearchInput.addEventListener('blur', function() {
+      if (isMobile() && !bannerSearchInput.value) {
+        bannerSearchContainer.classList.remove('expanded');
+        bannerSearchInput.style.display = '';
+      }
+    });
+    // On resize, reset search field if needed
+    window.addEventListener('resize', function() {
+      if (!isMobile()) {
+        bannerSearchContainer.classList.remove('expanded');
+        bannerSearchInput.style.display = '';
+      }
+    });
+    // Remove the input event handler for filtering latest boxes
+    // Instead, submit on Enter and redirect to search.html?q=...
+    const bannerSearchForm = document.createElement('form');
+    // Wrap the input and button in a form for proper submit
+    if (!bannerSearchContainer.querySelector('form')) {
+      bannerSearchForm.className = 'banner-search-form';
+      // Move all children into the form
+      while (bannerSearchContainer.firstChild) {
+        bannerSearchForm.appendChild(bannerSearchContainer.firstChild);
+      }
+      bannerSearchContainer.appendChild(bannerSearchForm);
+    }
+    // Listen for submit
+    bannerSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const q = bannerSearchInput.value.trim();
+      if (!q) return;
+        window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+    });
+  </script>
+  <script>
+    // --- LATEST FROM STA. ANA JARS ---
+    async function loadLatestResearch() {
+      try {
+        const res = await fetch('/api/researches?limit=4&sort=online_publication_date_desc');
+        if (!res.ok) throw new Error('Failed to fetch latest research');
+        const data = await res.json();
+        const latestBoxesContainer = document.querySelector('.latest-boxes');
+        if (!data.researches.length) {
+          latestBoxesContainer.innerHTML = '<div style="text-align:center; padding:2rem;">No research found.</div>';
+          return;
+        }
+        latestBoxesContainer.innerHTML = ''; // Clear static content
+        data.researches.forEach(research => {
+          const title = research.research_title || '';
+          const authors = research.authors || 'Unknown Author';
+          const abstract = research.abstract ? research.abstract.substring(0, 200) + '...' : 'No description available.';
+          const category = research.category_name || 'Uncategorized';
+          const urlTitle = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+          const typeName = (research.type_name || '').toLowerCase().replace(/\s+/g, '-');
+          const templateName = typeName.includes('school') ? 'schb' : typeName.includes('district') ? 'disb' : typeName.includes('division') ? 'divb' : 'berf';
+          const researchUrl = `/action-research/${typeName}/${templateName}-published-template.html?id=${research.research_id}&title=${encodeURIComponent(urlTitle)}`;
+          
+          const boxHTML = `
+            <div class="latest-box">
+              <div class="latest-box-title"><a href="${researchUrl}" style="color:inherit;text-decoration:none;">${title}</a></div>
+              <div class="latest-box-author">${authors}</div>
+              <div class="latest-box-desc">${abstract}</div>
+              <div class="latest-box-category">${category}</div>
+              <div class="latest-box-readmore"><a href="${researchUrl}" style="color:inherit;text-decoration:underline;">Read More...</a></div>
+            </div>
+          `;
+          latestBoxesContainer.insertAdjacentHTML('beforeend', boxHTML);
+        });
+      } catch (err) {
+        console.error('Error loading latest research:', err);
+        const box = document.querySelector('.latest-boxes');
+        if (box) box.innerHTML = '<div style="color:#d32f2f;padding:2rem;text-align:center;">Error loading latest research. Please try again later.</div>';
+        }
+      }
+
+    // --- FEATURED RESEARCHERS ---
+    async function loadFeaturedResearchers() {
+      try {
+        const res = await fetch('/api/researchers?featured=1&limit=5');
+        if (!res.ok) throw new Error('Failed to fetch featured researchers');
+        const data = await res.json();
+        const researchersGrid = document.querySelector('.researchers-grid');
+        const existingBoxes = researchersGrid.querySelectorAll('.researcher-box');
+
+        // Clear existing static boxes except for the "See All" button
+        existingBoxes.forEach(box => {
+            if (!box.querySelector('a[href="/researchers-profiles.html"]')) {
+                box.remove();
+          }
+        });
+
+        const seeAllBox = researchersGrid.querySelector('.researcher-box'); // The "See All" box remains
+
+        data.researchers.forEach(r => {
+          const middleInitial = r.middle_name ? ` ${r.middle_name.charAt(0)}. ` : ' ';
+          const fullName = `${r.first_name}${middleInitial}${r.last_name}`;
+          const profileUrl = `/researchers/researcherprofile.html?id=${r.profile_id}`;
+
+          const researcherBoxHTML = `
+            <div class="researcher-box">
+              <a href="${profileUrl}" style="text-decoration: none; display:contents;">
+                <img src="${r.profile_picture || '/researchers/profilepictures/NoProfilePicture.png'}" alt="${fullName}" class="researcher-img">
+                <div class="researcher-name">${fullName}</div>
+                <div class="researcher-position">${r.position || 'Position not specified'}</div>
+                <div class="researcher-profile">View Profile</div>
+              </a>
+            </div>
+          `;
+          // Insert before the "See All" button
+          seeAllBox.insertAdjacentHTML('beforebegin', researcherBoxHTML);
+        });
+      } catch (err) {
+        console.error('Error loading featured researchers:', err);
+        const grid = document.querySelector('.researchers-grid');
+        if (grid) grid.insertAdjacentHTML('afterbegin', '<div style="color:#d32f2f;padding:2rem;grid-column:1/-1;text-align:center;">Error loading featured researchers.</div>');
+      }
+    }
+    window.addEventListener('DOMContentLoaded', function() {
+      loadLatestResearch();
+      loadFeaturedResearchers();
+    });
+  </script>
+</body>
+</html> 

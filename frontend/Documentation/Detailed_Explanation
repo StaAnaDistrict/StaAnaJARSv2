@@ -1,0 +1,166 @@
+# Detailed Explanation of the Sta. Ana JARS Repository
+
+This document provides a comprehensive explanation of the Sta. Ana Journal of Action Research Studies (JARS) repository, tailored for someone who may not be deeply familiar with web development technologies like HTML, CSS, and JavaScript.
+
+## 1. What is Sta. Ana JARS? The Big Picture
+
+Imagine a digital library or a specialized magazine dedicated to showcasing research done by teachers and educators. That's essentially what **Sta. Ana JARS** is. It's a website where educators, primarily from the Sta. Ana District in Davao City, Philippines, can:
+
+*   **Publish their action research:** Action research is a type of study where teachers investigate their own teaching methods or school environments to find practical ways to improve them.
+*   **Share their findings:** Other teachers, school leaders, and even policymakers can learn from this research.
+*   **Get recognition:** It’s a way for educators to be acknowledged for their scholarly work.
+
+The website aims to be a central hub for this valuable research, making it easy to find, read, and learn from. Mr. Wedzmer B. Munjilul of Sta. Ana Central Elementary School initiated and developed this platform.
+
+## 2. How the Website is Built: The Core Components
+
+Websites are typically built using a few key technologies that work together. Think of it like building a house:
+
+*   **HTML (HyperText Markup Language) - The Skeleton and Content:**
+    *   HTML files (those ending in `.html`, like `index.html` or `about.html`) define the **structure and content** of each page.
+    *   It tells the web browser what headings to show, what paragraphs of text to display, where images should go, and what links to create.
+    *   For example, `index.html` is the blueprint for the homepage, `about.html` is for the "About Us" page, and each research article will have its own HTML structure to display its title, author, abstract, etc.
+
+*   **CSS (Cascading Style Sheets) - The Interior Design and Appearance:**
+    *   CSS controls how the HTML content **looks and is presented**. This includes colors, fonts, spacing, layout (like whether sections are side-by-side or stacked), and overall visual appeal.
+    *   In this project, the CSS rules are mostly written directly inside the HTML files, within `<style>` tags. This means each page carries its own styling instructions, though many styles (like the blue navigation bar or the look of the content boxes) are repeated across pages to give the site a consistent look and feel.
+
+*   **JavaScript (JS) - The Interactivity and Dynamic Elements:**
+    *   JavaScript adds **behavior and interactivity** to the website. It can make things happen on the page without needing to load a completely new page.
+    *   In Sta. Ana JARS, JavaScript is used for:
+        *   **Navigation:** Making the mobile "hamburger" menu open and close, and handling dropdown menus in the main navigation bar.
+        *   **Search:** Powering the search bars. When you type a search term, JavaScript helps fetch and display the relevant research papers.
+        *   **Loading Dynamic Content from Google Sheets:** This is a key feature. Much of the content, like the list of "Latest Research" on the homepage, details of "Featured Researchers," and the lists of papers in different categories (School-Based, District-Based, etc.), is not hardcoded directly into the HTML. Instead, JavaScript fetches this information from a public Google Spreadsheet in real-time (or close to it) and then inserts it into the appropriate places on the webpage. This makes it easier to update content without directly editing many HTML files – someone can just update the Google Sheet.
+
+These three components (HTML, CSS, JavaScript) are what your web browser (like Chrome, Firefox, or Safari) uses to actually show you the website.
+
+## 3. Frontend vs. Backend: A Simplified View for This Site
+
+You often hear about "frontend" and "backend" in web development.
+
+*   **Frontend:** This is everything your web browser downloads and displays to you – the HTML, CSS, and JavaScript we just discussed. It's what the user directly sees and interacts with.
+
+*   **Backend:** This is the "behind-the-scenes" part. For very complex websites, the backend might involve powerful servers, large databases, and a lot of code that processes data, manages user accounts, etc.
+
+**For Sta. Ana JARS, the "backend" is quite simple:**
+
+1.  **Web Server (Netlify):** The HTML, CSS, JavaScript files, and images are stored on web servers provided by a service called **Netlify**. When you type the website address or click a link, Netlify sends these files to your browser. Netlify is optimized for hosting static sites like this one.
+    *   The `netlify.toml` file in the repository is a configuration file that tells Netlify how to handle the site (e.g., build settings, redirects, custom headers).
+    *   The `headers` file specifies custom HTTP headers, which can control things like security and caching.
+    *   The `netlify.toml` file also mentions `functions = "functions"`. This suggests that in the future, the site *could* use Netlify Functions (small pieces of server-side code) for more advanced backend tasks, but currently, there isn't a `functions/` directory with active functions being used for core content delivery.
+
+2.  **Google Sheets (as a simple database):** As mentioned, for dynamic content like lists of research papers and researcher profiles, the "database" is actually a Google Spreadsheet.
+    *   The JavaScript on the website directly fetches data from this public Google Sheet.
+    *   This is a clever way to manage content for a static site without needing a complex traditional database setup.
+
+**Relationship:**
+1.  You type `staanajars.netlify.app` (or click a link) in your browser.
+2.  Your browser asks Netlify's servers for the requested page (e.g., `index.html`).
+3.  Netlify sends back the HTML file.
+4.  Your browser starts reading the HTML. It sees it needs certain CSS styles (embedded in the HTML) and JavaScript code (also embedded). It also sees it needs to load images.
+5.  If the page needs dynamic content (like the latest research on `index.html`), the JavaScript code in the page makes a separate request directly to Google Sheets to fetch that data.
+6.  Google Sheets sends back the data.
+7.  The JavaScript then takes this data and updates the HTML page to display it.
+8.  Your browser puts everything together to show you the complete, interactive webpage.
+
+## 4. File-by-File Explanation (Key Files and Directories)
+
+Here’s a breakdown of what the important files and folders in the repository do:
+
+*   **Root Directory (the main folder):**
+    *   `index.html`: The main landing page (homepage) of the website.
+    *   `about.html`: Contains information about the JARS initiative, its mission, and the people behind it.
+    *   `journal-issues.html`: A page that links to the different categories of research studies.
+    *   `submit-a-study.html`: Provides guidelines and instructions for authors who want to submit their research. It links to an external Google Form for actual submissions.
+    *   `editorial.html`: Lists the members of the editorial board and advisory board.
+    *   `researchers-profiles.html`: A directory page that lists all recognized researchers. This page dynamically loads data from a Google Sheet.
+    *   `search.html`: The page that displays search results when a user searches for research.
+    *   `privacy-policy.html`, `terms-of-use.html`, `site-map.html`: Standard informational pages for legal terms, privacy information, and a map of the site's structure.
+    *   `LICENSE`: Contains the legal license under which the project's code is shared (e.g., MIT, Apache).
+    *   `netlify.toml`: Configuration file for Netlify (the hosting service).
+    *   `headers`: Defines custom HTTP headers for the site when served by Netlify (can affect security and caching).
+    *   `google8932b43b946dba08.html`: A file used by Google to verify site ownership for services like Google Search Console.
+
+*   `action-research/` (folder): This is where the actual research papers are organized.
+    *   It contains sub-folders for each category of research (e.g., `school-based/`, `district-based/`, `division-based/`, `berf-grantee/`).
+    *   Inside each category folder:
+        *   `[category-name].html` (e.g., `school-based.html`): This is the landing page for that specific category. It dynamically loads and lists all the research papers belonging to that category from a Google Sheet.
+        *   `[template-name]-published-template.html` (e.g., `schb-published-template.html`): These are template files used to display the details of an individual research paper (title, author, abstract, link to PDF). When a new paper is added, a copy of this template would typically be made, renamed, and filled with the specific paper's details.
+
+*   `images/` (folder):
+    *   Contains all the images used on the website, such as the JARS logo (`StaAnaJARSLogo.png`, `jarslogo.svg`), banner images (`JARSBanner.png`), and placeholder images for researchers or documents (`Doc1.svg`, `Man1 copy.png`, etc.).
+    *   HTML files link to these images using tags like `<img src="images/StaAnaJARSLogo.png">`.
+
+*   `researchers/` (folder):
+    *   `researcherprofile.html`: This is a template page for displaying an individual researcher's profile. It's designed to dynamically load information (name, photo, publications, etc.) from a Google Sheet based on a parameter in the URL.
+    *   `profilepictures/` (sub-folder): Stores the profile pictures of the researchers.
+        *   `NoProfilePicture.png`: A default image used if a researcher doesn't have a specific profile picture.
+        *   `text.txt`: Likely an empty placeholder file, not used by the website itself.
+
+**How files are linked:**
+Web pages are linked together using anchor tags (`<a>`) in HTML. For example, the navigation bar in `index.html` has links like `<a href="about.html">About</a>`, which tells the browser to load the `about.html` page when the "About" link is clicked. Similarly, images are embedded using `<img src="...">`, and CSS/JavaScript (if they were in external files) would be linked using `<link>` and `<script src="...">` tags respectively.
+
+## 5. How to Engage With This Repository (Especially if Cloned)
+
+If you were to "clone" (make a copy of) this repository to your own computer or for your own similar project, here’s how you might work with it:
+
+### 5.1. For Non-Technical Users (Understanding Content)
+*   You can open the `.html` files in a text editor (like Notepad, or more advanced ones like VS Code) to read the text content directly.
+*   You can see how the folders are organized to understand the structure.
+
+### 5.2. For Technical Users / Making Changes / Using as a Framework
+
+This repository provides a complete, self-contained website for a research journal. You could clone it to:
+*   Start a similar journal for a different school, district, or subject area.
+*   Learn how a static journal website can be built and dynamically populated from Google Sheets.
+*   Customize and extend its features.
+
+**Making Content Changes:**
+
+*   **Editing Static Text (e.g., "About Us" page, policy pages):**
+    1.  Open the relevant HTML file (e.g., `about.html`) in a code editor.
+    2.  Find the text you want to change directly in the HTML content.
+    3.  Edit and save. Preview by opening the HTML file in a browser.
+
+*   **Adding or Updating Research Papers:**
+    1.  **PDF Ready:** Have the research paper PDF hosted online (e.g., Google Drive with public sharing) and get its public URL.
+    2.  **Update Google Sheet:**
+        *   Open the main Google Sheet (Sheet ID: `1DaIXfAf7JIG4KFEYqEWdu9qeEFQ6LDyHutZS5GlmaKU`).
+        *   Go to the sheet corresponding to the paper's category (e.g., `school-based`).
+        *   Add a new row with columns for: Title, Author(s), Description/Abstract, Specific Category (e.g., "Teaching and Learning"), and the **relative URL to the HTML page you will create for this paper** (e.g., `action-research/school-based/new-cool-research.html`).
+    3.  **Create the HTML Page for the Paper:**
+        *   Go to the correct subfolder in `action-research/` (e.g., `action-research/school-based/`).
+        *   Copy an existing template file (like `schb-published-template.html`).
+        *   Rename the copied file to exactly match the URL you put in the Google Sheet (e.g., `new-cool-research.html`).
+        *   Edit this new HTML file:
+            *   Change the page `<title>`.
+            *   Update the placeholder content for the title, author, abstract, keywords, category, publication info.
+            *   Crucially, update the PDF download link to point to your hosted PDF: `<a href="YOUR_PDF_LINK_HERE" class="published-btn" ...>`.
+    4.  The list on the category page (e.g., `action-research/school-based.html`) should update automatically as it loads from the Google Sheet.
+
+*   **Adding or Updating Researcher Profiles:**
+    1.  **Profile Picture:** Add the researcher's image to `researchers/profilepictures/`.
+    2.  **Update `researchers-profile` Google Sheet:**
+        *   In the main Google Sheet, go to the `researchers-profile` tab.
+        *   Add/edit a row with the researcher's details: path to their profile picture (e.g., `researchers/profilepictures/name.png`), name, position, school, email, degree, years in service, comma-separated list of their published research titles, and recognitions.
+    3.  **Update `active-teachers` Google Sheet (for the directory listing):**
+        *   Go to the `active-teachers` tab.
+        *   Add/edit a row for the researcher: their name, a short description, and the URL to their profile. The URL should be `researchers/researcherprofile.html?row=X`, where `X` is their **1-based row number** in the `researchers-profile` sheet.
+    4.  The `researchers-profiles.html` directory and the individual `researcherprofile.html` page will load this data dynamically.
+
+**Changing Styling (CSS):**
+*   Currently, styles are within `<style>` tags in each HTML file. To change a specific page's style, edit those tags.
+*   For site-wide style changes (like the navbar color), you'd unfortunately need to edit it in multiple files.
+*   **Recommendation for Cloned Projects:** A good improvement would be to move common CSS rules into one or more separate `.css` files (e.g., `css/main.css`) and link these files in the `<head>` of each HTML page. This makes style changes much easier to manage. (See `CODE_QUALITY.md` for more on this).
+
+**Changing Interactivity (JavaScript):**
+*   Similar to CSS, JavaScript is mostly embedded in `<script>` tags in each HTML file.
+*   **Recommendation for Cloned Projects:** Common JavaScript functions (like the mobile menu toggle or Google Sheet data loading logic) could be moved to external `.js` files (e.g., `js/main.js`) and linked. This makes the code cleaner and easier to manage. (See `CODE_QUALITY.md`).
+*   If you change the Google Sheet ID, you'll need to find and replace the ID `1DaIXfAf7JIG4KFEYqEWdu9qeEFQ6LDyHutZS5GlmaKU` in all JavaScript sections where it's used. A better approach would be to define it once in a central JS configuration.
+
+**Deployment (Hosting your cloned site):**
+*   The site is set up for Netlify. If you clone the repository and push it to your own Git provider (like GitHub, GitLab), you can easily link it to a new Netlify account and Netlify will build and deploy it, often for free for static sites.
+*   Alternatively, since it's a static site, you can host the files on any web server that can serve HTML, CSS, and JS files.
+
+This explanation should provide a solid foundation for understanding the Sta. Ana JARS repository. For more technical details on specific areas or potential improvements, please refer to the other `.md` documents generated alongside this one (`PRD.md`, `CODE_QUALITY.md`, etc.).
+---

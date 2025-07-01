@@ -1,0 +1,323 @@
+body {
+    margin: 0;
+    background: #FBF7F1;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #042A4A;
+    padding: 0.5rem 2rem;
+    position: relative;
+}
+
+.navbar-logo {
+    height: 48px;
+    width: auto;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: auto;
+}
+
+.navbar-links li {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    padding: 0.5rem 0.7rem;
+    display: block;
+}
+
+.navbar-link:hover {
+    opacity: 0.7;
+}
+
+.navbar-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #042A4A;
+    min-width: 180px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 0 0 0.5rem 0.5rem;
+    z-index: 20;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    list-style: none;
+    margin: 0;
+}
+
+.navbar-dropdown-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-weight: 400;
+    display: block;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.navbar-dropdown-link:hover {
+    background: #06477A;
+}
+
+.navbar-dropdown-parent:hover>.navbar-dropdown,
+.navbar-dropdown-parent:focus-within>.navbar-dropdown {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .navbar-links {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #042A4A;
+        z-index: 100;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border-radius: 0 0 0.5rem 0.5rem;
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
+
+    .navbar-links li {
+        width: 100%;
+        display: block;
+    }
+
+    .navbar-dropdown-parent {
+        width: 100%;
+    }
+
+    .navbar-dropdown {
+        position: static;
+        box-shadow: none;
+        border-radius: 0;
+        min-width: 0;
+        padding: 0;
+        background: #06325A;
+        display: none;
+    }
+
+    .navbar-dropdown-parent.open>.navbar-dropdown {
+        display: flex;
+    }
+
+    .navbar-dropdown-link {
+        padding: 0.7rem 2.2rem;
+        font-size: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .issues-box {
+        padding: 1.5rem;
+        width: calc(100% - 2rem);
+        margin: 0 1rem 1.5rem 1rem;
+        font-size: 1rem;
+        max-width: none;
+    }
+}
+
+.issues-section {
+    background: #FBF7F1;
+    padding: 3.5rem 0 4rem 0;
+    width: 100%;
+    min-height: 60vh;
+}
+
+.issues-title {
+    font-family: 'Century Old Style Std', 'Times New Roman', Times, serif;
+    color: #042A4A;
+    font-size: 2.1rem;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 2rem;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.01em;
+}
+
+.issues-box,
+.about-box {
+    background: #FBF7F0;
+    border: 0.5pt solid #4F5559;
+    border-radius: 1.1rem;
+    box-shadow: 0 2px 8px rgba(4, 42, 74, 0.04);
+    padding: 2.2rem 2.5rem 2rem 2.5rem;
+    width: calc(100% - 5rem);
+    max-width: 1200px;
+    margin: 0 auto 2.5rem auto;
+    font-size: 1.13rem;
+    color: #052A4A;
+    line-height: 1.7;
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+
+.issue-heading {
+    font-family: 'Century Old Style Std', 'Times New Roman', Times, serif;
+    color: #042A4A;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 2.2rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.issue-heading:first-child {
+    margin-top: 0;
+}
+
+.issue-heading:hover {
+    color: #06477A;
+    text-decoration: underline;
+}
+
+.issue-desc {
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #052A4A;
+    margin-bottom: 1.2rem;
+    margin-left: 2.2rem;
+    line-height: 1.6;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+.site-footer {
+    background: #042A4A;
+    color: #fff;
+    padding: 2.2rem 1rem 1.5rem 1rem;
+    text-align: center;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+}
+
+.footer-copyright {
+    font-size: 1.08rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.02rem;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 400;
+    transition: opacity 0.2s;
+}
+
+.footer-link:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+}
+
+.footer-sep {
+    color: #fff;
+    font-size: 1.1rem;
+    opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        gap: 0.7rem;
+    }
+
+    .footer-links {
+        gap: 0.7rem;
+        font-size: 0.98rem;
+    }
+
+    .footer-copyright {
+        font-size: 0.98rem;
+    }
+
+    .issues-title {
+        font-size: 1.3rem;
+        padding-left: 0.7rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .issues-box {
+        padding: 1.2rem 1.5rem 1.1rem 1.5rem;
+        width: auto;
+        max-width: 100vw;
+        font-size: 1rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .issue-heading {
+        font-size: 1.05rem;
+        margin-left: 0.2rem;
+    }
+
+    .issue-desc {
+        font-size: 0.93rem;
+        margin-left: 1.2rem;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .issues-box {
+        padding: 2rem 2.5rem 2rem 2.5rem;
+        width: 95vw;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 1.08rem;
+    }
+
+    .issues-title {
+        font-size: 1.7rem;
+        padding-left: 1.5rem;
+    }
+}

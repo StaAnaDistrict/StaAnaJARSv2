@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Recognitions - Administrator Dashboard - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/admin-manage-recognitions.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo-link"><img src="images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo"></a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="index.html" class="navbar-link">Home</a></li>
+      <li><a href="about.html" class="navbar-link">About</a></li>
+      <li><a href="admin-dashboard.html" class="navbar-link">Admin Dashboard</a></li>
+      <li><a href="admin-add-research.html" class="navbar-link">Add Research</a></li>
+      <li><a href="admin-add-researcher.html" class="navbar-link">Add Researcher</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <section class="form-section">
+    <div class="form-container">
+      <h2 class="form-title">Manage Recognitions</h2>
+      <p class="form-subtitle">Add and manage researcher recognitions</p>
+      
+      <div class="form-card">
+        <form id="addRecognitionForm">
+          <div class="form-group">
+            <label for="researcherSelect" class="form-label">Select Researcher *</label>
+            <select id="researcherSelect" name="profile_id" class="form-select" required>
+              <option value="">Choose a researcher...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="recognitionTitle" class="form-label">Recognition Title *</label>
+            <input type="text" id="recognitionTitle" name="recognition_title" class="form-input" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="awardingBody" class="form-label">Awarding Body *</label>
+              <input type="text" id="awardingBody" name="awarding_body" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="yearReceived" class="form-label">Year Received *</label>
+              <input type="number" id="yearReceived" name="year_received" class="form-input" min="1900" max="2030" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" class="form-textarea" placeholder="Optional description of the recognition"></textarea>
+          </div>
+
+          <div id="errorMessage" class="error-message"></div>
+          <div id="successMessage" class="success-message"></div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="addBtn">Add Recognition</button>
+            <a href="admin-dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+          </div>
+        </form>
+
+        <div class="recognitions-list" id="recognitionsList">
+          <!-- Recognitions will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Check authentication
+    window.addEventListener('load', function() {
+      const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+      if (isLoggedIn !== 'true') {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+      loadResearchers();
+      loadRecognitions();
+    });
+
+    // Load researchers for dropdown
+    async function loadResearchers() {
+      try {
+        const response = await fetch('/api/researchers?limit=100');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        const select = document.getElementById('researcherSelect');
+        
+        data.researchers.forEach(researcher => {
+          const option = document.createElement('option');
+          option.value = researcher.profile_id;
+          option.textContent = `${researcher.last_name}, ${researcher.first_name} ${researcher.middle_name || ''}`.trim();
+          select.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading researchers:', error);
+      }
+    }
+
+    // Load recognitions list
+    async function loadRecognitions() {
+      try {
+        const response = await fetch('/api/recognitions?limit=50');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const recognitions = await response.json();
+        displayRecognitions(recognitions);
+      } catch (error) {
+        console.error('Error loading recognitions:', error);
+        document.getElementById('recognitionsList').innerHTML = '<div style="padding: 1rem; color: #666;">Error loading recognitions.</div>';
+      }
+    }
+
+    // Display recognitions
+    function displayRecognitions(recognitions) {
+      const container = document.getElementById('recognitionsList');
+      
+      if (recognitions.length === 0) {
+        container.innerHTML = '<div style="padding: 1rem; color: #666;">No recognitions found.</div>';
+        return;
+      }
+
+      container.innerHTML = recognitions.map(recognition => `
+        <div class="recognition-item">
+          <div class="recognition-info">
+            <h4>${recognition.recognition_name}</h4>
+            <p><strong>${recognition.last_name}, ${recognition.first_name}</strong> | ${recognition.awarding_body} | ${recognition.year_received}</p>
+            ${recognition.details ? `<p>${recognition.details}</p>` : ''}
+          </div>
+          <div class="recognition-actions">
+            <button class="btn btn-secondary btn-small" onclick="editRecognition(${recognition.recognition_id})">Edit</button>
+            <button class="btn btn-danger btn-small" onclick="deleteRecognition(${recognition.recognition_id})">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Add recognition
+    document.getElementById('addRecognitionForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const addBtn = document.getElementById('addBtn');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      addBtn.disabled = true;
+      addBtn.textContent = 'Adding...';
+
+      try {
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        
+        const response = await fetch('/api/recognitions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        successMessage.textContent = 'Recognition added successfully!';
+        successMessage.style.display = 'block';
+        
+        this.reset();
+        loadRecognitions();
+
+      } catch (error) {
+        console.error('Error adding recognition:', error);
+        errorMessage.textContent = error.message || 'Error adding recognition. Please try again.';
+        errorMessage.style.display = 'block';
+      } finally {
+        addBtn.disabled = false;
+        addBtn.textContent = 'Add Recognition';
+      }
+    });
+
+    // Delete recognition
+    async function deleteRecognition(id) {
+      if (!confirm('Are you sure you want to delete this recognition?')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/recognitions/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        loadRecognitions();
+        alert('Recognition deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting recognition:', error);
+        alert('Error deleting recognition. Please try again.');
+      }
+    }
+
+    // Edit recognition (placeholder - you can expand this)
+    function editRecognition(id) {
+      alert('Edit functionality can be expanded here. For now, you can delete and re-add the recognition.');
+    }
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        links.classList.toggle('active');
+      }
+    });
+  </script>
+</body>
+</html> 

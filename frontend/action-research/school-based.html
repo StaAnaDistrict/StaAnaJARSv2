@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School-Based Action Research - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../css/school-based.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../index.html" class="navbar-logo-link">
+      <img src="images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo">
+    </a>
+    <button class="navbar-hamburger" id="navbarHamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="../index.html" class="navbar-link">Home</a></li>
+      <li><a href="../about.html" class="navbar-link">About</a></li>
+      <li class="navbar-dropdown-parent">
+        <a href="#" class="navbar-link navbar-dropdown-label" tabindex="0">Journal Issues</a>
+        <ul class="navbar-dropdown">
+            <li><a href="school-based.html" class="navbar-dropdown-link">School-Based</a></li>
+          <li><a href="district-based.html" class="navbar-dropdown-link">District-Based</a></li>
+          <li><a href="division-based.html" class="navbar-dropdown-link">Division-Based</a></li>
+          <li><a href="berf-grantee.html" class="navbar-dropdown-link">BERF Grantee</a></li>
+        </ul>
+      </li>
+      <li><a href="../submit-a-study.html" class="navbar-link">Submit a Study</a></li>
+      <li><a href="../editorial.html" class="navbar-link">Editorial Board</a></li>
+    </ul>
+  </nav>
+  <section class="searchbar-section">
+    <div class="banner-search-container">
+      <button id="bannerSearchBtn" class="banner-search-btn" aria-label="Open search"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="7.5" stroke="#042A4A" stroke-width="2"/><line x1="16.0607" y1="16.3536" x2="20" y2="20.2929" stroke="#042A4A" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <input type="text" id="latestSearch" class="banner-search-input" placeholder="Search latest..." aria-label="Search latest studies">
+    </div>
+  </section>
+  <section class="research-section">
+    <h2 class="research-title">🎓 School-Based Action Research</h2>
+    <div class="research-box">
+      <div id="loading">Loading research entries...</div>
+      <div id="error">Failed to load research entries. Please try again later.</div>
+      <div id="research-entries"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="../privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="../terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="../site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger menu functionality
+    const hamburger = document.getElementById('navbarHamburger');
+    const navLinks = document.getElementById('navbarLinks');
+    
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Mobile dropdown functionality
+    const dropdownParent = document.querySelector('.navbar-dropdown-parent');
+    const dropdownLabel = dropdownParent.querySelector('.navbar-dropdown-label');
+
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    dropdownLabel.addEventListener('click', (e) => {
+      if (isMobile()) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+
+    // Close dropdown on window resize
+    window.addEventListener('resize', () => {
+      if (!isMobile()) {
+        dropdownParent.classList.remove('open');
+        navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Load research entries
+    async function loadResearchEntries() {
+      try {
+        const response = await fetch('/api/researches');
+        if (!response.ok) {
+          throw new Error('Failed to fetch research data');
+        }
+
+        const data = await response.json();
+        
+        // Filter for specific research type
+        const filteredResearch = data.researches.filter(research => 
+          research.type_name === 'School Action Research'
+        );
+
+        displayResearchEntries(filteredResearch);
+      } catch (error) {
+        console.error('Error loading research entries:', error);
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    function displayResearchEntries(researches) {
+      document.getElementById('loading').style.display = 'none';
+      
+      if (researches.length === 0) {
+        document.getElementById('research-entries').innerHTML = 
+          '<div style="text-align:center; padding: 2rem;">No School-Based Action Research entries found.</div>';
+        return;
+      }
+
+      let html = '';
+      researches.forEach(research => {
+        const title = research.research_title || '';
+        const category = research.category_name || '';
+        const authors = research.authors || 'Unknown Author';
+        const completionDate = `${research.completion_month || ''} ${research.completion_year || ''}`;
+        const abstract = research.abstract || 'No description available.';
+        
+        // Create URL-friendly title for the URL
+        const urlTitle = title.toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+          .replace(/\s+/g, '-') // Replace spaces with hyphens
+          .replace(/-+/g, '-') // Replace multiple hyphens with single
+          .trim();
+        
+        // Create link to dynamic research page with title in URL
+        const researchUrl = `/action-research/school-based/schb-published-template.html?id=${research.research_id}&title=${encodeURIComponent(urlTitle)}`;
+        
+        html += `
+          <div class="research-entry">
+            <div class="research-title-text">
+              <a href="${researchUrl}" class="read-more">${title}</a>
+            </div>
+            <div class="research-author">${authors}, ${completionDate}</div>
+            <div class="research-description"><em>${abstract}</em></div>
+            <div class="research-category">Category: ${category}</div>
+            <a href="${researchUrl}" class="read-more">Read More</a>
+          </div>
+        `;
+      });
+      
+      document.getElementById('research-entries').innerHTML = html;
+    }
+
+    // Mobile search expand/collapse
+    const bannerSearchBtn = document.getElementById('bannerSearchBtn');
+    const bannerSearchInput = document.getElementById('latestSearch');
+    const bannerSearchContainer = document.querySelector('.banner-search-container');
+    
+    bannerSearchBtn.addEventListener('click', function() {
+      if (isMobile()) {
+        bannerSearchContainer.classList.add('expanded');
+        bannerSearchInput.style.display = 'block';
+        setTimeout(() => bannerSearchInput.focus(), 100);
+      }
+    });
+    
+    bannerSearchInput.addEventListener('blur', function() {
+      if (isMobile() && !bannerSearchInput.value) {
+        bannerSearchContainer.classList.remove('expanded');
+        bannerSearchInput.style.display = '';
+      }
+    });
+    
+    // On resize, reset search field if needed
+    window.addEventListener('resize', function() {
+      if (!isMobile()) {
+        bannerSearchContainer.classList.remove('expanded');
+        bannerSearchInput.style.display = '';
+      }
+    });
+    
+    // Search submit redirects to search.html
+    const bannerSearchForm = document.createElement('form');
+      bannerSearchForm.className = 'banner-search-form';
+      while (bannerSearchContainer.firstChild) {
+        bannerSearchForm.appendChild(bannerSearchContainer.firstChild);
+      }
+      bannerSearchContainer.appendChild(bannerSearchForm);
+    bannerSearchForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const q = bannerSearchInput.value.trim();
+      if (!q) return loadResearchEntries();
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('research-entries').innerHTML = '';
+      try {
+        const response = await fetch(`/api/researches?search=${encodeURIComponent(q)}`);
+        if (!response.ok) throw new Error('Failed to fetch research data');
+        const data = await response.json();
+        displayResearchEntries(data.researches);
+      } catch (error) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+      }
+    });
+
+    // Load research entries when page loads
+    document.addEventListener('DOMContentLoaded', loadResearchEntries);
+  </script>
+</body>
+</html>

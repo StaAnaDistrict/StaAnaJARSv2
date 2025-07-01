@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Usage Examples - Sta. Ana JARS</title>
+    <link rel="stylesheet" href="css/api-examples.css">
+</head>
+<body>
+    <h1>API Usage Examples - Sta. Ana JARS</h1>
+    <p>This page demonstrates how to use the Node.js backend API from your frontend HTML files.</p>
+
+    <div class="example">
+        <h2>1. Fetch All Researchers</h2>
+        <p>Get a list of all researchers from the database:</p>
+        <div class="code">
+fetch('/api/researchers')
+  .then(response => response.json())
+  .then(data => {
+    console.log('Researchers:', data);
+    // Display researchers in your HTML
+    displayResearchers(data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+        </div>
+        <button onclick="fetchResearchers()">Test Fetch Researchers</button>
+        <div id="researchersResult"></div>
+    </div>
+
+    <div class="example">
+        <h2>2. Fetch All Research Studies</h2>
+        <p>Get a list of all research studies with pagination:</p>
+        <div class="code">
+fetch('/api/researches?page=1&limit=10')
+  .then(response => response.json())
+  .then(data => {
+    console.log('Research studies:', data.researches);
+    console.log('Pagination:', data.pagination);
+    // Display research studies in your HTML
+    displayResearchStudies(data.researches);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+        </div>
+        <button onclick="fetchResearchStudies()">Test Fetch Research Studies</button>
+        <div id="researchResult"></div>
+    </div>
+
+    <div class="example">
+        <h2>3. Fetch Single Research Study</h2>
+        <p>Get details of a specific research study by ID:</p>
+        <div class="code">
+const researchId = 1; // Replace with actual ID
+fetch(`/api/researches/${researchId}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Research details:', data.research);
+    console.log('Authors:', data.authors);
+    // Display research details in your HTML
+    displayResearchDetails(data.research, data.authors);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+        </div>
+        <button onclick="fetchSingleResearch()">Test Fetch Single Research</button>
+        <div id="singleResearchResult"></div>
+    </div>
+
+    <div class="example">
+        <h2>4. Search Research Studies</h2>
+        <p>Search research studies by title, abstract, or keywords:</p>
+        <div class="code">
+const searchTerm = 'action research'; // Replace with user input
+fetch(`/api/researches?search=${encodeURIComponent(searchTerm)}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Search results:', data.researches);
+    // Display search results in your HTML
+    displaySearchResults(data.researches);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+        </div>
+        <input type="text" id="searchInput" placeholder="Enter search term" style="padding: 8px; margin: 5px;">
+        <button onclick="searchResearch()">Test Search</button>
+        <div id="searchResult"></div>
+    </div>
+
+    <div class="example">
+        <h2>5. Filter Research by Category</h2>
+        <p>Get research studies filtered by category:</p>
+        <div class="code">
+const category = 'School-Based'; // Replace with selected category
+fetch(`/api/researches?category=${encodeURIComponent(category)}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Category results:', data.researches);
+    // Display category results in your HTML
+    displayCategoryResults(data.researches);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+        </div>
+        <select id="categorySelect" style="padding: 8px; margin: 5px;">
+            <option value="">Select Category</option>
+            <option value="School-Based">School-Based</option>
+            <option value="District-Based">District-Based</option>
+            <option value="Division-Based">Division-Based</option>
+            <option value="BERF-Grantee">BERF-Grantee</option>
+        </select>
+        <button onclick="filterByCategory()">Test Category Filter</button>
+        <div id="categoryResult"></div>
+    </div>
+
+    <div class="example">
+        <h2>6. Admin Authentication</h2>
+        <p>Login to access admin features:</p>
+        <div class="code">
+const loginData = {
+  username: 'JARS_Admin',
+  password: 'StaAnaJars2025'
+};
+
+fetch('/api/auth/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(loginData)
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Login successful:', data);
+  // Store token for future requests
+  sessionStorage.setItem('adminToken', data.token);
+  sessionStorage.setItem('adminUser', JSON.stringify(data.user));
+})
+.catch(error => {
+  console.error('Login error:', error);
+});
+        </div>
+        <button onclick="testLogin()">Test Admin Login</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="example">
+        <h2>7. Authenticated API Requests</h2>
+        <p>Make authenticated requests using JWT token:</p>
+        <div class="code">
+const token = sessionStorage.getItem('adminToken');
+
+fetch('/api/admin/dashboard', {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Dashboard data:', data);
+  // Display admin dashboard data
+  displayDashboardData(data);
+})
+.catch(error => {
+  console.error('Error:', error);
+});
+        </div>
+        <button onclick="testAuthenticatedRequest()">Test Authenticated Request</button>
+        <div id="authResult"></div>
+    </div>
+
+    <script>
+        // Example functions for testing
+        async function fetchResearchers() {
+            try {
+                const response = await fetch('/api/researchers');
+                const data = await response.json();
+                document.getElementById('researchersResult').innerHTML = 
+                    `<div class="result">✅ Success! Found ${data.length} researchers</div>`;
+                console.log('Researchers:', data);
+            } catch (error) {
+                document.getElementById('researchersResult').innerHTML = 
+                    `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function fetchResearchStudies() {
+            try {
+                const response = await fetch('/api/researches?page=1&limit=5');
+                const data = await response.json();
+                document.getElementById('researchResult').innerHTML = 
+                    `<div class="result">✅ Success! Found ${data.researches.length} research studies</div>`;
+                console.log('Research studies:', data);
+            } catch (error) {
+                document.getElementById('researchResult').innerHTML = 
+                    `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function fetchSingleResearch() {
+            try {
+                const response = await fetch('/api/researches/1');
+                const data = await response.json();
+                document.getElementById('singleResearchResult').innerHTML = 
+                    `<div class="result">✅ Success! Research: ${data.research?.research_title || 'Not found'}</div>`;
+                console.log('Single research:', data);
+            } catch (error) {
+                document.getElementById('singleResearchResult').innerHTML = 
+                    `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function searchResearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (!searchTerm) {
+                document.getElementById('searchResult').innerHTML = 
+                    `<div class="result error">❌ Please enter a search term</div>`;
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/researches?search=${encodeURIComponent(searchTerm)}`);
+                const data = await response.json();
+                document.getElementById('searchResult').innerHTML = 
+                    `<div class="result">✅ Success! Found ${data.researches.length} results for "${searchTerm}"</div>`;
+                console.log('Search results:', data);
+            } catch (error) {
+                document.getElementById('searchResult').innerHTML = 
+                    `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function filterByCategory() {
+            const category = document.getElementById('categorySelect').value;
+            if (!category) {
+                document.getElementById('categoryResult').innerHTML = 
+                    `<div class="result error">❌ Please select a category</div>`;
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/researches?category=${encodeURIComponent(category)}`);
+                const data = await response.json();
+                document.getElementById('categoryResult').innerHTML = 
+                    `<div class="result">✅ Success! Found ${data.researches.length} studies in "${category}"</div>`;
+                console.log('Category results:', data);
+            } catch (error) {
+                document.getElementById('categoryResult').innerHTML = 
+                    `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'JARS_Admin',
+                        password: 'StaAnaJars2025'
+                    })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById('loginResult').innerHTML = 
+                        `<div class="result">✅ Login successful! Welcome ${data.user.username}</div>`;
+                    sessionStorage.setItem('adminToken', data.token);
+                    sessionStorage.setItem('adminUser', JSON.stringify(data.user));
+                } else {
+                    document.getElementById('loginResult').innerHTML = 
+                        `<div class="result error">❌ Login failed: ${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = 
+                    `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testAuthenticatedRequest() {
+            const token = sessionStorage.getItem('adminToken');
+            if (!token) {
+                document.getElementById('authResult').innerHTML = 
+                    `<div class="result error">❌ No token found. Please login first.</div>`;
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/dashboard', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById('authResult').innerHTML = 
+                        `<div class="result">✅ Authenticated request successful!</div>`;
+                } else {
+                    document.getElementById('authResult').innerHTML = 
+                        `<div class="result error">❌ Authentication failed: ${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('authResult').innerHTML = 
+                    `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        (function() {
+            var bannerSearchForm = document.querySelector('.banner-search-form');
+            var bannerSearchInput = document.querySelector('.banner-search-input');
+            if (bannerSearchForm && bannerSearchInput && !bannerSearchForm.dataset.redirectBound) {
+                bannerSearchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var q = bannerSearchInput.value.trim();
+                    if (!q) return;
+                    window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+                });
+                bannerSearchForm.dataset.redirectBound = 'true';
+            }
+        })();
+    </script>
+</body>
+</html> 

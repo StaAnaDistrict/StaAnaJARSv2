@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Loading... - Sta. Ana JARS 🏺</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../css/dynamic-research.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../../index.html" class="navbar-logo-link"><img src="../../images/StaAnaJARSLogo.png" alt="Logo" class="navbar-logo"></a>
+    <ul class="navbar-links" id="navbarLinks">
+      <li><a href="../../index.html" class="navbar-link">Home</a></li>
+      <li><a href="../../about.html" class="navbar-link">About</a></li>
+      <li class="navbar-dropdown-parent">
+        <a href="#" class="navbar-link navbar-dropdown-label" tabindex="0">Journal Issues</a>
+        <ul class="navbar-dropdown">
+          <li><a href="../school-based.html" class="navbar-dropdown-link">School-Based</a></li>
+          <li><a href="../district-based.html" class="navbar-dropdown-link">District-Based</a></li>
+          <li><a href="../division-based.html" class="navbar-dropdown-link">Division-Based</a></li>
+          <li><a href="../berf-grantee.html" class="navbar-dropdown-link">BERF Grantee</a></li>
+        </ul>
+      </li>
+      <li><a href="../../submit-a-study.html" class="navbar-link">Submit a Study</a></li>
+      <li><a href="../../editorial.html" class="navbar-link">Editorial Board</a></li>
+    </ul>
+    <div class="navbar-hamburger" id="navbarHamburger" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <section class="published-section">
+    <div id="loadingContent" class="loading">
+      Loading research details...
+    </div>
+    
+    <div id="errorContent" class="error" style="display: none;">
+      Error loading research details. Please try again.
+    </div>
+    
+    <div id="researchContent" style="display: none;">
+      <h2 id="researchTitle" class="published-title"></h2>
+      <div class="published-content">
+        <div id="researchAuthors" class="published-meta"></div>
+        <div class="published-abstract-label">Abstract</div>
+        <div id="researchAbstract" class="published-abstract"></div>
+        <div class="published-keywords-label">Keywords</div>
+        <div id="researchKeywords" class="published-keywords-list"></div>
+        <div class="published-category-label">Research Category</div>
+        <div id="researchCategory" class="published-category"></div>
+        <div class="published-publishedin-label">Published In</div>
+        <div id="researchPublishedIn" class="published-publishedin"></div>
+        <div class="published-publishedon-label">Published On</div>
+        <div id="researchPublishedOn" class="published-publishedon"></div>
+        <div class="published-doi-label">DOI</div>
+        <div id="researchDOI" class="published-doi"></div>
+        <div class="published-copyright">Copyright © 2025 Authors</div>
+      </div>
+      <div class="published-btn-row">
+        <a id="pdfLink" href="#" class="published-btn" target="_blank">View/Download PDF File</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2025 Sta. Ana JARS. All rights reserved. Developed by Mr. Wedzmer Munjilul</div>
+      <div class="footer-links">
+        <a href="../../privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="../../terms-of-use.html" class="footer-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="../../site-map.html" class="footer-link">Site Map</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Get research ID from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const researchId = urlParams.get('id');
+    
+    if (!researchId) {
+      document.getElementById('loadingContent').style.display = 'none';
+      document.getElementById('errorContent').style.display = 'block';
+      document.getElementById('errorContent').textContent = 'Research ID is required. Please provide a valid research ID.';
+      return;
+    }
+
+    // Fetch research data from API
+    async function loadResearchData() {
+      try {
+        const response = await fetch(`/api/researches/${researchId}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        displayResearchData(data);
+      } catch (error) {
+        console.error('Error loading research data:', error);
+        document.getElementById('loadingContent').style.display = 'none';
+        document.getElementById('errorContent').style.display = 'block';
+        document.getElementById('errorContent').textContent = 'Error loading research details. Please try again.';
+      }
+    }
+
+    // Display research data
+    function displayResearchData(data) {
+      const { research, authors } = data;
+      
+      // Update page title
+      document.getElementById('pageTitle').textContent = `${research.research_title} - Sta. Ana JARS 🏺`;
+      
+      // Update research title
+      document.getElementById('researchTitle').textContent = research.research_title;
+      
+      // Update authors
+      const authorsText = authors.map(author => {
+        const name = `${author.last_name}, ${author.first_name} ${author.middle_initial || ''}`.trim();
+        return author.is_lead_author ? `${name} (Lead Author)` : name;
+      }).join('; ');
+      document.getElementById('researchAuthors').textContent = authorsText;
+      
+      // Update abstract
+      document.getElementById('researchAbstract').textContent = research.abstract || 'Abstract not available';
+      
+      // Update keywords
+      document.getElementById('researchKeywords').textContent = research.keywords || 'Keywords not available';
+      
+      // Update category
+      document.getElementById('researchCategory').textContent = research.category_name || 'Category not available';
+      
+      // Update published in
+      const completionMonth = research.completion_month || 'Month';
+      const completionYear = research.completion_year || 'Year';
+      const typeName = research.type_name || 'Action Research';
+      document.getElementById('researchPublishedIn').textContent = 
+        `${typeName}. Completed in ${completionMonth} of ${completionYear}.`;
+      
+      // Update published on
+      const publicationDate = research.online_publication_date ? 
+        new Date(research.online_publication_date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }) : 'Date not available';
+      const journalIssue = research.journal_issue || 'Issue Number';
+      document.getElementById('researchPublishedOn').textContent = 
+        `${typeName} Sta. Ana JARS Journal Issue ${journalIssue}, ${publicationDate}`;
+      
+      // Update DOI
+      document.getElementById('researchDOI').textContent = research.doi || 'DOI not available';
+      
+      // Update PDF link
+      const pdfLink = document.getElementById('pdfLink');
+      if (research.research_url) {
+        pdfLink.href = research.research_url;
+        pdfLink.style.display = 'inline-block';
+      } else {
+        pdfLink.style.display = 'none';
+      }
+      
+      // Hide loading, show content
+      document.getElementById('loadingContent').style.display = 'none';
+      document.getElementById('researchContent').style.display = 'block';
+    }
+
+    // Load data when page loads
+    loadResearchData();
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('navbarHamburger');
+    const links = document.getElementById('navbarLinks');
+    hamburger.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        links.classList.toggle('active');
+      }
+    });
+
+    // Dropdown for Journal Issues
+    const dropdownParent = document.querySelector('.navbar-dropdown-parent');
+    const dropdownLabel = dropdownParent.querySelector('.navbar-dropdown-label');
+    
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    
+    dropdownLabel.addEventListener('click', function(e) {
+      if (isMobile()) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    
+    dropdownLabel.addEventListener('keypress', function(e) {
+      if (isMobile() && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        dropdownParent.classList.toggle('open');
+      }
+    });
+    
+    // Hide dropdown on resize
+    window.addEventListener('resize', function() {
+      dropdownParent.classList.remove('open');
+    });
+  </script>
+</body>
+</html> 

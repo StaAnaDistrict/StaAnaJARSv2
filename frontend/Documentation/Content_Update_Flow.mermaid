@@ -1,0 +1,67 @@
+graph TD
+    subgraph Edit Static Page Content
+        direction LR
+        A1["Open relevant HTML file (e.g., about.html) in code editor"] --> A2{"Edit text/content directly in HTML"};
+        A2 --> A3["Save HTML file"];
+        A3 --> A4["Preview changes locally in browser"];
+    end
+
+    subgraph "Add/Update Research Papers"
+        direction LR
+        B1["1. Prepare/Host Research Paper PDF"] --> B2["Get Public URL of PDF"];
+        B2 --> B3["2. Update Google Sheet ('[category-sheet]')"];
+        B3 --> B4["Add/Edit Row: Title, Author, Abstract, Category, HTML Page URL"];
+        B4 --> B5["3. Create/Update HTML Page for Paper"];
+        B5 --> B6["In 'action-research/[category]/' folder"];
+        B6 --> B7["Copy/Rename '*-published-template.html'"];
+        B7 --> B8["Edit new HTML: Update Title, Author, Abstract, Keywords, Category Info"];
+        B8 --> B9["Link to PDF: Update 'href' of download button"];
+        B9 --> B10["Ensure relative paths are correct"];
+        B10 --> B11["Save HTML file"];
+        B11 --> B12["4. Verify on Category Page (auto-updates from Sheet)"];
+    end
+
+    subgraph "Add/Update Researcher Profiles"
+        direction LR
+        C1["1. Prepare Profile Picture"] --> C2["Place image in 'researchers/profilepictures/'"];
+        C2 --> C3["2. Update 'researchers-profile' Google Sheet"];
+        C3 --> C4["Add/Edit Row: Pic Path, Name, Position, School, Email, Degree, Experience, Published Works (comma-separated), Recognitions"];
+        C4 --> C5["3. Update 'active-teachers' Google Sheet (for Directory)"];
+        C5 --> C6["Add/Edit Row: Name, Short Bio, Profile Page URL"];
+        C6 --> C7["Profile Page URL: 'researchers/researcherprofile.html?row=X' (X is 1-based row in 'researchers-profile' sheet)"];
+        C7 --> C8["4. Verify on Directory & Profile Page (auto-updates from Sheets)"];
+    end
+
+    A4 --> Z["Commit & Push Changes to Git"];
+    B12 --> Z;
+    C8 --> Z;
+
+    style A1 fill:#f9f,stroke:#333,stroke-width:2px
+    style A2 fill:#f9f,stroke:#333,stroke-width:2px
+    style A3 fill:#f9f,stroke:#333,stroke-width:2px
+    style A4 fill:#f9f,stroke:#333,stroke-width:2px
+
+    style B1 fill:#ccf,stroke:#333,stroke-width:2px
+    style B2 fill:#ccf,stroke:#333,stroke-width:2px
+    style B3 fill:#ccf,stroke:#333,stroke-width:2px
+    style B4 fill:#ccf,stroke:#333,stroke-width:2px
+    style B5 fill:#ccf,stroke:#333,stroke-width:2px
+    style B6 fill:#ccf,stroke:#333,stroke-width:2px
+    style B7 fill:#ccf,stroke:#333,stroke-width:2px
+    style B8 fill:#ccf,stroke:#333,stroke-width:2px
+    style B9 fill:#ccf,stroke:#333,stroke-width:2px
+    style B10 fill:#ccf,stroke:#333,stroke-width:2px
+    style B11 fill:#ccf,stroke:#333,stroke-width:2px
+    style B12 fill:#ccf,stroke:#333,stroke-width:2px
+
+    style C1 fill:#cfc,stroke:#333,stroke-width:2px
+    style C2 fill:#cfc,stroke:#333,stroke-width:2px
+    style C3 fill:#cfc,stroke:#333,stroke-width:2px
+    style C4 fill:#cfc,stroke:#333,stroke-width:2px
+    style C5 fill:#cfc,stroke:#333,stroke-width:2px
+    style C6 fill:#cfc,stroke:#333,stroke-width:2px
+    style C7 fill:#cfc,stroke:#333,stroke-width:2px
+    style C8 fill:#cfc,stroke:#333,stroke-width:2px
+
+    style Z fill:#f00,stroke:#333,stroke-width:4px
+```

@@ -1,0 +1,25 @@
+{
+    // Editor settings
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.wordWrap": "on",
+    // Prettier configuration (requires Prettier extension)
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // Files settings
+    "files.eol": "\n", // Ensure consistent line endings (Linux/macOS style)
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    // Live Server extension settings (optional)
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveServer.settings.port": 5501 // Optional: change default port if 5500 is in use
+}
