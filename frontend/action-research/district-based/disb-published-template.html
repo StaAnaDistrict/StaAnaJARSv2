@@ -49,6 +49,8 @@
       <div class="published-publishedon">School-Based Action Research Sta. Ana JARS Journal Issue 1, Month Day, Year</div>
       <div class="published-doi-label">DOI</div>
       <div class="published-doi">URL registration currently on process</div>
+      <div class="published-citation-label">Cite this Article:</div>
+      <div class="published-citation"></div>
       <div class="published-copyright">Copyright © 2025 Authors</div>
     </div>
     <div class="published-btn-row">
@@ -127,6 +129,37 @@
         if (research.research_url) {
           document.querySelector('.published-btn').href = research.research_url;
         }
+        // --- APA Citation Generation ---
+        function getInitials(name) {
+          if (!name) return '';
+          return name.split(' ').map(n => n[0].toUpperCase() + '.').join(' ');
+        }
+        function formatAuthors(authors) {
+          if (!authors || !authors.length) return 'Unknown Author';
+          return authors.map(a => `${a.last_name}, ${a.first_name ? a.first_name[0].toUpperCase() + '.' : ''}${a.middle_name ? ' ' + a.middle_name[0].toUpperCase() + '.' : ''}`.trim()).join(', ');
+        }
+        function extractYear(str) {
+          if (!str) return '';
+          // Try to match a 4-digit year at the end or in the string
+          const match = str.match(/(19|20)\d{2}(?!.*(19|20)\d{2})/);
+          return match ? match[0] : '';
+        }
+        const authorStr = formatAuthors(authors);
+        // Try to extract year from published_in, fallback to published_on
+        let year = extractYear(research.published_in);
+        if (!year) year = extractYear(research.published_on);
+        const title = research.research_title || '';
+        const publishedOn = research.published_on || '';
+        const doi = research.doi && research.doi !== 'URL registration currently on process' ? research.doi : '';
+        let authorClean = authorStr.trim().replace(/\.$/, '');
+        let citation = authorClean;
+        if (year) citation += `. (${year}).`;
+        else citation += '.';
+        citation += ` ${title}.`;
+        if (publishedOn) citation += ` ${publishedOn}`;
+        if (doi) citation += `. doi: ${doi}`;
+        document.querySelector('.published-citation').innerHTML = citation;
+        // --- End APA Citation Generation ---
       } catch (err) {
         document.body.innerHTML = '<div style="color:#d32f2f;padding:2rem;">❌ Research not found.</div>';
       }
