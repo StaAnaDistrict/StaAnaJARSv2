@@ -292,3 +292,30 @@ body {
 .published-btn {
     margin-left: 0;
 }
+
+.published-citation-label {
+    font-family: 'Century Old Style Std', 'Times New Roman', Times, serif;
+    color: #042A4A;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    padding-left: 2rem;
+    margin-top: 1.5em;
+    text-align: left;
+}
+
+.published-citation {
+    font-family: 'Myriad Variable Concept', 'Myriad Pro', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.05rem;
+    color: #052A4A;
+    margin-bottom: 1.1rem;
+    font-style: normal;
+    padding-left: 2rem;
+    line-height: 1.5;
+    text-align: left;
+    word-break: break-word;
+}
+
+.published-citation i {
+    font-style: italic;
+}
