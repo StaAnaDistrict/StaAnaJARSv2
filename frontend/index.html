@@ -13,7 +13,7 @@
   <meta property="og:title" content="Sta. Ana JARS – Journal of Action Research Studies 🏺">
   <meta property="og:description" content="Explore original research by teachers across the Sta. Ana District, Davao City, Philippines. A home for school-based and BERF-supported studies.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="staanajarsv2.onrender.com">
+  <meta property="og:url" content="staanajars.netlify.app">
   <meta property="og:image" content="/images/StaAnaJARSLogo.png">
 
   <!-- Twitter Card Tags -->
@@ -291,9 +291,21 @@
           const abstract = research.abstract ? research.abstract.substring(0, 200) + '...' : 'No description available.';
           const category = research.category_name || 'Uncategorized';
           const urlTitle = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
-          const typeName = (research.type_name || '').toLowerCase().replace(/\s+/g, '-');
-          const templateName = typeName.includes('school') ? 'schb' : typeName.includes('district') ? 'disb' : typeName.includes('division') ? 'divb' : 'berf';
-          const researchUrl = `/action-research/${typeName}/${templateName}-published-template.html?id=${research.research_id}&title=${encodeURIComponent(urlTitle)}`;
+          // Map type_name to correct folder
+          let typeFolder = 'school-based';
+          let templateName = 'schb';
+          const typeName = (research.type_name || '').toLowerCase();
+          if (typeName.includes('district')) {
+            typeFolder = 'district-based';
+            templateName = 'disb';
+          } else if (typeName.includes('division')) {
+            typeFolder = 'division-based';
+            templateName = 'divb';
+          } else if (typeName.includes('berf')) {
+            typeFolder = 'berf-grantee';
+            templateName = 'berf';
+          }
+          const researchUrl = `/action-research/${typeFolder}/${templateName}-published-template.html?id=${research.research_id}&title=${encodeURIComponent(urlTitle)}`;
           
           const boxHTML = `
             <div class="latest-box">
